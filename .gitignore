@@ -1,0 +1,16 @@
+# --- DO NOT PUBLISH THESE ---
+
+# The paid product PDFs. These are what buyers pay for — they must be delivered
+# through your payment provider (Gumroad/Stripe), NOT served from the public site.
+# If you commit this folder, anyone can download the products for free.
+downloads/
+
+# Original full-resolution PNGs (~430 MB). The site uses the compressed .jpg versions
+# in assets/exercises/. Keep these locally as masters; no need to deploy them.
+_originals-png/
+
+# --- local / scratch ---
+Thumbs.db
+.DS_Store
+desktop.ini
+*.log

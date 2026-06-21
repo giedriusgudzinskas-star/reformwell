@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reformwell — Clinician-designed rehab programs for common injuries</title>
+  <meta name="description" content="Evidence-informed, self-guided physical-therapy programs for the most common injuries and functional problems. Short relief plans and full rehab programs you can follow at home." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <!-- Social share (Open Graph). After you pick a domain, set og:url and make og:image an ABSOLUTE url (e.g. https://yourdomain.com/og-image.png) for reliable link previews. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Reformwell" />
+  <meta property="og:title" content="Reformwell — Clinician-designed rehab programs" />
+  <meta property="og:description" content="Self-guided physical-therapy programs for the most common injuries. Short relief plans and full rehab programs you can follow at home." />
+  <meta property="og:image" content="og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="mark">↻</span> Reformwell</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#programs">Programs</a>
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="cart-btn" id="cartBtn" aria-label="Open cart">🛒<span class="cart-count" id="cartCount" hidden>0</span></button>
+        <a href="#programs" class="btn btn-primary">Find your program</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="container">
+      <span>✓ Reviewed by licensed physiotherapists</span>
+      <span>✓ 30-day money-back guarantee</span>
+      <span>✓ Instant download, yours forever</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Clinician-designed rehab</span>
+        <h1 id="heroHeadline"></h1>
+        <p class="hero-sub" id="heroSub"></p>
+        <div class="hero-cta">
+          <a href="#programs" class="btn btn-primary" id="heroCta">Browse programs</a>
+          <a href="#how" class="btn btn-outline">How it works</a>
+        </div>
+        <div class="hero-trust">
+          <span class="stars">★★★★★</span>
+          <span>Built on real rehab principles — not random workouts.</span>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-card-img"><span class="body-icon">🦴</span></div>
+        <div class="float-card">
+          <div class="fc-top">📈 Week 2 of 6 · Lower Back</div>
+          <div class="fc-bar"><i></i></div>
+          <div class="fc-title">12 min/day · Phase 1 complete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section class="section section--surface">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Why Reformwell</span>
+        <h2>Structured recovery you can actually trust</h2>
+        <p>The same progressive logic a good physiotherapist uses — packaged so you can follow it at home, at your own pace.</p>
+      </div>
+      <div class="grid-3" id="valueProps"></div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="section" id="programs">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The programs</span>
+        <h2>Find the plan for your problem</h2>
+        <p>Each condition comes in two versions: a short <b>Relief &amp; Reset</b> plan to calm a flare-up, and a full <b>Rehab &amp; Resilience</b> program to rebuild strength and reduce the chance of it returning.</p>
+      </div>
+      <div class="cards" id="catalog"></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--surface" id="how">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How it works</span>
+        <h2>From pain to a plan in minutes</h2>
+      </div>
+      <div class="steps" id="howItWorks"></div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Simple pricing</span>
+        <h2>Pay once. Keep it forever.</h2>
+        <p id="pricingRationale"></p>
+      </div>
+      <div class="tiers" id="tiers"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section--surface">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">What people say</span>
+        <h2>Real plans, real progress</h2>
+        <p class="muted" style="font-size:.85rem">Example reviews shown for layout — replace with genuine, consented customer feedback before launch.</p>
+      </div>
+      <div class="quotes" id="testimonials"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container narrow center">
+      <span class="eyebrow">About Reformwell</span>
+      <h2>Recovery, made clear</h2>
+      <p id="aboutCopy" style="font-size:1.05rem;color:var(--muted)"></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--surface" id="faq">
+    <div class="container narrow">
+      <div class="section-head center">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered</h2>
+      </div>
+      <div class="accordion" id="faqList"></div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer-band">
+    <div class="container">
+      <span class="di">⚕️</span>
+      <p id="disclaimer"></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="fbrand"><span class="fmark">↻</span> Reformwell</div>
+          <p id="footerTagline" style="max-width:320px"></p>
+        </div>
+        <div>
+          <h4>Programs</h4>
+          <ul id="footerPrograms"></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support &amp; legal</h4>
+          <ul>
+            <li><a href="mailto:hello@reformwell.example">Contact</a></li>
+            <li><a href="#" id="refundLink">Refund policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="#faq">Help</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Reformwell. Not a substitute for in-person medical care.</span>
+        <span>Made with care for people in pain.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Shopping cart">
+    <div class="drawer-head">
+      <h3>Your cart</h3>
+      <button class="drawer-close" id="drawerClose" aria-label="Close">×</button>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

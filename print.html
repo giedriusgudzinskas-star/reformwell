@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reformwell — program</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --primary:#0E7C86; --primary-dark:#0A5B63; --accent:#E8A33D;
+      --text:#13202A; --muted:#5B6B73; --border:#DCE4E5; --bg:#F6F8F8; --tint:#E7F1F2;
+    }
+    *{ box-sizing:border-box; }
+    @page{ size:A4; margin:16mm 15mm 20mm; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:11.5px; line-height:1.55;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    }
+    h1,h2,h3,h4{ font-family:'Sora',sans-serif; margin:0; line-height:1.2; }
+    p{ margin:0 0 8px; }
+    .wrap{ max-width:760px; margin:0 auto; }
+
+    /* Cover */
+    .cover{
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff;
+      border-radius:14px; padding:30px 32px; margin-bottom:22px;
+    }
+    .brand{ display:flex; align-items:center; gap:9px; font-family:'Sora'; font-weight:700; font-size:16px; letter-spacing:.2px; }
+    .brand .mk{ width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,.18); display:grid;place-items:center; }
+    .cover .kind{ display:inline-block; margin-top:18px; font-size:10px; letter-spacing:.09em; text-transform:uppercase; background:rgba(255,255,255,.18); padding:4px 10px; border-radius:999px; }
+    .cover h1{ font-size:27px; margin:10px 0 4px; }
+    .cover .sub{ opacity:.92; font-size:12.5px; }
+    .cover .meta{ display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:16px; font-size:11px; }
+    .cover .meta b{ font-weight:600; }
+
+    .section{ margin:0 0 16px; }
+    .eyebrow{ font-family:'Sora'; font-weight:700; font-size:13px; color:var(--primary-dark); margin:0 0 7px; padding-bottom:5px; border-bottom:2px solid var(--tint); }
+    ul.clean{ margin:0; padding-left:18px; }
+    ul.clean li{ margin:3px 0; }
+
+    .box{ background:var(--bg); border-radius:10px; padding:13px 15px; margin:10px 0; }
+    .box.warn{ background:#FFF8EC; border-left:3px solid var(--accent); }
+    .box h4{ font-size:12px; margin:0 0 5px; }
+
+    .phase{ border:1px solid var(--border); border-radius:11px; padding:14px 16px; margin:0 0 12px; page-break-inside:avoid; }
+    .phase-h{ display:flex; align-items:baseline; gap:9px; margin-bottom:3px; }
+    .phase-h h3{ font-size:14px; }
+    .phase-h .wk{ font-size:10px; color:var(--primary-dark); background:var(--tint); padding:2px 8px; border-radius:999px; font-weight:600; }
+    .phase .focus{ color:var(--muted); font-size:11px; margin-bottom:9px; }
+    .ex{ border-top:1px solid var(--border); padding:8px 0; page-break-inside:avoid; display:flex; gap:11px; align-items:flex-start; }
+    .ex:first-of-type{ border-top:0; }
+    .ex-thumb{ flex:0 0 78px; width:78px; height:78px; border-radius:8px; object-fit:cover; background:var(--tint); }
+    .ex-body{ flex:1; min-width:0; }
+    .ex-h{ display:flex; justify-content:space-between; gap:10px; }
+    .ex-name{ font-family:'Sora'; font-weight:600; font-size:12px; }
+    .ex-dose{ font-size:10px; color:var(--primary-dark); font-weight:600; white-space:nowrap; text-align:right; }
+    .ex p{ margin:3px 0 0; font-size:11px; }
+    .ex .why{ color:var(--muted); }
+    .lbl{ font-weight:600; color:var(--text); }
+
+    /* tracker */
+    table.track{ width:100%; border-collapse:collapse; margin-top:6px; font-size:10.5px; }
+    table.track th, table.track td{ border:1px solid var(--border); padding:6px 8px; text-align:center; }
+    table.track th{ background:var(--tint); font-family:'Sora'; font-weight:600; }
+    table.track td.day{ text-align:left; color:var(--muted); }
+
+    .disclaimer{ margin-top:20px; padding-top:12px; border-top:1px solid var(--border); color:var(--muted); font-size:9.5px; }
+    .pagebreak{ page-break-before:always; }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="root"></div>
+  <script src="data.js"></script>
+  <script>
+    (function(){
+      function qp(n){ var m=new RegExp("[?&]"+n+"=([^&]+)").exec(location.search); return m?decodeURIComponent(m[1]):null; }
+      function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+      // Image filename from exercise name — keep identical to assets/exercises/ slugs.
+      function exSlug(name){ return String(name==null?"":name).toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
+      // Thumbnail; if the picture isn't generated yet it hides itself and the text reflows full width.
+      function thumb(name){ return '<img class="ex-thumb" src="assets/exercises/'+esc(exSlug(name))+'.jpg" onerror="this.style.display=\'none\'">'; }
+      var D=window.SITE_DATA||{}, slug=qp("slug"), kind=qp("kind")||"short";
+      var conds=D.conditions||[], biz=D.business||{}, safety=D.safety||{};
+      var c=conds.filter(function(x){return x.slug===slug;})[0];
+      var root=document.getElementById("root");
+      if(!c){ root.innerHTML="<p>Program not found: "+esc(slug)+"</p>"; return; }
+      var p = kind==="long" ? c.longProgram : c.shortProgram;
+      var saf=(safety.perCondition||[]).filter(function(s){return s.slug===slug;})[0]||{};
+
+      function list(arr){ if(!arr||!arr.length) return ""; return '<ul class="clean">'+arr.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>"; }
+
+      var meta=[];
+      if(p.durationWeeks) meta.push("<span><b>Duration:</b> "+esc(p.durationWeeks)+"</span>");
+      if(p.sessionsPerWeek) meta.push("<span><b>Frequency:</b> "+esc(p.sessionsPerWeek)+"</span>");
+      if(p.timePerSession) meta.push("<span><b>Per session:</b> "+esc(p.timePerSession)+"</span>");
+
+      var phases=(p.phases||[]).map(function(ph){
+        var exs=(ph.exercises||[]).map(function(e){
+          var dose=[e.sets?e.sets+" sets":"", e.reps?"× "+e.reps:"", e.tempoOrHold?"· "+e.tempoOrHold:""].filter(Boolean).join(" ");
+          return '<div class="ex">'+thumb(e.name)+'<div class="ex-body"><div class="ex-h"><span class="ex-name">'+esc(e.name)+'</span><span class="ex-dose">'+esc(dose)+'</span></div>'+
+            '<p><span class="lbl">How:</span> '+esc(e.cues)+'</p>'+
+            (e.progression?'<p><span class="lbl">Progress:</span> '+esc(e.progression)+'</p>':'')+
+            (e.why?'<p class="why"><span class="lbl">Why:</span> '+esc(e.why)+'</p>':'')+
+            '</div></div>';
+        }).join("");
+        return '<div class="phase"><div class="phase-h"><h3>'+esc(ph.name)+'</h3>'+(ph.weeks?'<span class="wk">'+esc(ph.weeks)+'</span>':'')+'</div>'+
+          '<div class="focus">'+esc(ph.focus)+'</div>'+exs+'</div>';
+      }).join("");
+
+      // simple 6-week tracker
+      var rows="";
+      for(var w=1; w<=6; w++){
+        rows+='<tr><td class="day">Week '+w+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+      }
+      var tracker='<table class="track"><tr><th style="text-align:left">Week</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>'+rows+'</table>';
+
+      root.innerHTML=
+        '<div class="cover">'+
+          '<div class="brand"><span class="mk">↻</span> Reformwell</div>'+
+          '<span class="kind">'+(kind==="long"?"Full Rehab & Resilience Program":"Relief & Reset Program")+'</span>'+
+          '<h1>'+esc(p.name)+'</h1>'+
+          '<div class="sub">'+esc(c.name)+'</div>'+
+          '<div class="meta">'+meta.join("")+'</div>'+
+        '</div>'+
+
+        (p.goal?'<div class="section"><div class="box"><b>Goal:</b> '+esc(p.goal)+'</div></div>':'')+
+
+        '<div class="section"><h2 class="eyebrow">About this condition</h2><p>'+esc(c.overview)+'</p></div>'+
+
+        (c.whoIsThisFor?'<div class="section"><h2 class="eyebrow">Who this program is for</h2>'+list(c.whoIsThisFor)+'</div>':'')+
+
+        (c.seeADoctorIf?'<div class="box warn"><h4>⚠️ See a clinician first if…</h4>'+list(c.seeADoctorIf)+'</div>':'')+
+        (saf.safetyNote?'<div class="box warn"><h4>Safety note</h4><p>'+esc(saf.safetyNote)+'</p></div>':'')+
+
+        '<div class="section pagebreak"><h2 class="eyebrow">Your program</h2>'+phases+'</div>'+
+
+        ((p.education&&p.education.length)?'<div class="section"><h2 class="eyebrow">Self-care tips</h2>'+list(p.education)+'</div>':'')+
+        (c.expectedOutcomes?'<div class="section"><h2 class="eyebrow">What to expect</h2>'+list(c.expectedOutcomes)+'</div>':'')+
+
+        '<div class="section"><h2 class="eyebrow">Progress tracker</h2><p style="color:var(--muted)">Tick each day you complete a session.</p>'+tracker+'</div>'+
+
+        '<div class="disclaimer">'+esc(safety.globalDisclaimer||biz.medicalDisclaimer||"")+'</div>';
+
+      document.title="Reformwell — "+p.name;
+    })();
+  </script>
+</body>
+</html>
