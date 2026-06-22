@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
 <head>
   <meta charset="UTF-8" />
   <title>Reformwell — program</title>
@@ -80,29 +80,29 @@
       // Image filename from exercise name — keep identical to assets/exercises/ slugs.
       function exSlug(name){ return String(name==null?"":name).toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
       // Thumbnail; if the picture isn't generated yet it hides itself and the text reflows full width.
-      function thumb(name){ return '<img class="ex-thumb" src="assets/exercises/'+esc(exSlug(name))+'.jpg" onerror="this.style.display=\'none\'">'; }
+      function thumb(e){ var slug=(e&&e.img)?e.img:exSlug(e&&e.name?e.name:e); return '<img class="ex-thumb" src="assets/exercises/'+esc(slug)+'.jpg" onerror="this.style.display=\'none\'">'; }
       var D=window.SITE_DATA||{}, slug=qp("slug"), kind=qp("kind")||"short";
       var conds=D.conditions||[], biz=D.business||{}, safety=D.safety||{};
       var c=conds.filter(function(x){return x.slug===slug;})[0];
       var root=document.getElementById("root");
-      if(!c){ root.innerHTML="<p>Program not found: "+esc(slug)+"</p>"; return; }
+      if(!c){ root.innerHTML="<p>Programa nerasta: "+esc(slug)+"</p>"; return; }
       var p = kind==="long" ? c.longProgram : c.shortProgram;
       var saf=(safety.perCondition||[]).filter(function(s){return s.slug===slug;})[0]||{};
 
       function list(arr){ if(!arr||!arr.length) return ""; return '<ul class="clean">'+arr.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>"; }
 
       var meta=[];
-      if(p.durationWeeks) meta.push("<span><b>Duration:</b> "+esc(p.durationWeeks)+"</span>");
-      if(p.sessionsPerWeek) meta.push("<span><b>Frequency:</b> "+esc(p.sessionsPerWeek)+"</span>");
-      if(p.timePerSession) meta.push("<span><b>Per session:</b> "+esc(p.timePerSession)+"</span>");
+      if(p.durationWeeks) meta.push("<span><b>Trukmė:</b> "+esc(p.durationWeeks)+"</span>");
+      if(p.sessionsPerWeek) meta.push("<span><b>Dažnis:</b> "+esc(p.sessionsPerWeek)+"</span>");
+      if(p.timePerSession) meta.push("<span><b>Vienam užsiėmimui:</b> "+esc(p.timePerSession)+"</span>");
 
       var phases=(p.phases||[]).map(function(ph){
         var exs=(ph.exercises||[]).map(function(e){
-          var dose=[e.sets?e.sets+" sets":"", e.reps?"× "+e.reps:"", e.tempoOrHold?"· "+e.tempoOrHold:""].filter(Boolean).join(" ");
-          return '<div class="ex">'+thumb(e.name)+'<div class="ex-body"><div class="ex-h"><span class="ex-name">'+esc(e.name)+'</span><span class="ex-dose">'+esc(dose)+'</span></div>'+
-            '<p><span class="lbl">How:</span> '+esc(e.cues)+'</p>'+
-            (e.progression?'<p><span class="lbl">Progress:</span> '+esc(e.progression)+'</p>':'')+
-            (e.why?'<p class="why"><span class="lbl">Why:</span> '+esc(e.why)+'</p>':'')+
+          var dose=[e.sets?e.sets+" serijos":"", e.reps?"× "+e.reps:"", e.tempoOrHold?"· "+e.tempoOrHold:""].filter(Boolean).join(" ");
+          return '<div class="ex">'+thumb(e)+'<div class="ex-body"><div class="ex-h"><span class="ex-name">'+esc(e.name)+'</span><span class="ex-dose">'+esc(dose)+'</span></div>'+
+            '<p><span class="lbl">Kaip:</span> '+esc(e.cues)+'</p>'+
+            (e.progression?'<p><span class="lbl">Pažanga:</span> '+esc(e.progression)+'</p>':'')+
+            (e.why?'<p class="why"><span class="lbl">Kodėl:</span> '+esc(e.why)+'</p>':'')+
             '</div></div>';
         }).join("");
         return '<div class="phase"><div class="phase-h"><h3>'+esc(ph.name)+'</h3>'+(ph.weeks?'<span class="wk">'+esc(ph.weeks)+'</span>':'')+'</div>'+
@@ -112,34 +112,34 @@
       // simple 6-week tracker
       var rows="";
       for(var w=1; w<=6; w++){
-        rows+='<tr><td class="day">Week '+w+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+        rows+='<tr><td class="day">'+w+' savaitė</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
       }
-      var tracker='<table class="track"><tr><th style="text-align:left">Week</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>'+rows+'</table>';
+      var tracker='<table class="track"><tr><th style="text-align:left">Savaitė</th><th>Pr</th><th>An</th><th>Tr</th><th>Kt</th><th>Pn</th><th>Št</th><th>Sk</th></tr>'+rows+'</table>';
 
       root.innerHTML=
         '<div class="cover">'+
           '<div class="brand"><span class="mk">↻</span> Reformwell</div>'+
-          '<span class="kind">'+(kind==="long"?"Full Rehab & Resilience Program":"Relief & Reset Program")+'</span>'+
+          '<span class="kind">'+(kind==="long"?"Pilnos reabilitacijos ir atsparumo programa":"Palengvinimo ir atstatymo programa")+'</span>'+
           '<h1>'+esc(p.name)+'</h1>'+
           '<div class="sub">'+esc(c.name)+'</div>'+
           '<div class="meta">'+meta.join("")+'</div>'+
         '</div>'+
 
-        (p.goal?'<div class="section"><div class="box"><b>Goal:</b> '+esc(p.goal)+'</div></div>':'')+
+        (p.goal?'<div class="section"><div class="box"><b>Tikslas:</b> '+esc(p.goal)+'</div></div>':'')+
 
-        '<div class="section"><h2 class="eyebrow">About this condition</h2><p>'+esc(c.overview)+'</p></div>'+
+        '<div class="section"><h2 class="eyebrow">Apie šią būklę</h2><p>'+esc(c.overview)+'</p></div>'+
 
-        (c.whoIsThisFor?'<div class="section"><h2 class="eyebrow">Who this program is for</h2>'+list(c.whoIsThisFor)+'</div>':'')+
+        (c.whoIsThisFor?'<div class="section"><h2 class="eyebrow">Kam skirta ši programa</h2>'+list(c.whoIsThisFor)+'</div>':'')+
 
-        (c.seeADoctorIf?'<div class="box warn"><h4>⚠️ See a clinician first if…</h4>'+list(c.seeADoctorIf)+'</div>':'')+
-        (saf.safetyNote?'<div class="box warn"><h4>Safety note</h4><p>'+esc(saf.safetyNote)+'</p></div>':'')+
+        (c.seeADoctorIf?'<div class="box warn"><h4>⚠️ Pirmiausia kreipkitės į specialistą, jei…</h4>'+list(c.seeADoctorIf)+'</div>':'')+
+        (saf.safetyNote?'<div class="box warn"><h4>Saugumo pastaba</h4><p>'+esc(saf.safetyNote)+'</p></div>':'')+
 
-        '<div class="section pagebreak"><h2 class="eyebrow">Your program</h2>'+phases+'</div>'+
+        '<div class="section pagebreak"><h2 class="eyebrow">Jūsų programa</h2>'+phases+'</div>'+
 
-        ((p.education&&p.education.length)?'<div class="section"><h2 class="eyebrow">Self-care tips</h2>'+list(p.education)+'</div>':'')+
-        (c.expectedOutcomes?'<div class="section"><h2 class="eyebrow">What to expect</h2>'+list(c.expectedOutcomes)+'</div>':'')+
+        ((p.education&&p.education.length)?'<div class="section"><h2 class="eyebrow">Savipriežiūros patarimai</h2>'+list(p.education)+'</div>':'')+
+        (c.expectedOutcomes?'<div class="section"><h2 class="eyebrow">Ko tikėtis</h2>'+list(c.expectedOutcomes)+'</div>':'')+
 
-        '<div class="section"><h2 class="eyebrow">Progress tracker</h2><p style="color:var(--muted)">Tick each day you complete a session.</p>'+tracker+'</div>'+
+        '<div class="section"><h2 class="eyebrow">Pažangos sekiklis</h2><p style="color:var(--muted)">Pažymėkite kiekvieną dieną, kai atliekate užsiėmimą.</p>'+tracker+'</div>'+
 
         '<div class="disclaimer">'+esc(safety.globalDisclaimer||biz.medicalDisclaimer||"")+'</div>';
 

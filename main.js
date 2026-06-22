@@ -31,7 +31,7 @@
   }
   function $(sel, root) { return (root || document).querySelector(sel); }
   function el(id) { return document.getElementById(id); }
-  function money(n) { return "$" + n; }
+  function money(n) { return "€" + n; }
   function qs(name) {
     var m = new RegExp("[?&]" + name + "=([^&]+)").exec(location.search);
     return m ? decodeURIComponent(m[1]) : null;
@@ -48,10 +48,13 @@
       .replace(/^-+|-+$/g, "");
   }
   // <img> that shows a clean placeholder if the picture hasn't been generated yet.
-  function exImage(name) {
-    var src = "assets/exercises/" + exSlug(name) + ".jpg";
+  // Uses the stored English `img` slug so translated exercise names don't break image lookup.
+  function exImage(e) {
+    var slug = (e && e.img) ? e.img : exSlug(e && e.name ? e.name : e);
+    var name = (e && e.name) ? e.name : String(e);
+    var src = "assets/exercises/" + slug + ".jpg";
     return '<div class="ex-media">' +
-      '<img class="ex-img" loading="lazy" alt="' + esc(name) + ' exercise illustration" src="' + esc(src) + '" ' +
+      '<img class="ex-img" loading="lazy" alt="' + esc(name) + '" src="' + esc(src) + '" ' +
       'onerror="this.style.display=&#39;none&#39;;this.parentNode.classList.add(&#39;is-empty&#39;)">' +
       "</div>";
   }
@@ -112,7 +115,7 @@
           var it = SKUS[s];
           return '<div class="cart-line"><div class="cl-main">' +
             '<div class="cl-title">' + esc(it.title) + '</div>' +
-            '<button class="cl-remove" data-remove="' + esc(s) + '">Remove</button>' +
+            '<button class="cl-remove" data-remove="' + esc(s) + '">Pašalinti</button>' +
             '</div><div class="cl-price">' + money(it.price) + '</div></div>';
         }).join("");
       }
@@ -132,10 +135,10 @@
     if (!items.length) return;
     var missing = items.filter(function (s) { return !PAYMENT_LINKS[s]; });
     if (missing.length) {
-      var guide = biz.paymentSetupGuide || "Connect Stripe Payment Links or Gumroad to start accepting payments.";
+      var guide = biz.paymentSetupGuide || "Prijunkite Stripe Payment Links arba Gumroad, kad galėtumėte priimti mokėjimus.";
       openModal(
-        '<h3>Connect payments to go live</h3>' +
-        '<p class="muted">This is a fully built storefront. To take real money, connect a payment provider — no server or code required. Paste each product’s payment link into <b>PAYMENT_LINKS</b> in <code>main.js</code>.</p>' +
+        '<h3>Prijunkite mokėjimus, kad pradėtumėte pardavinėti</h3>' +
+        '<p class="muted">Tai visiškai parengta parduotuvė. Kad priimtumėte realius mokėjimus, prijunkite mokėjimų tiekėją — nereikia nei serverio, nei programavimo. Įklijuokite kiekvieno produkto mokėjimo nuorodą į <b>PAYMENT_LINKS</b> faile <code>main.js</code>.</p>' +
         '<pre>' + esc(guide) + '</pre>'
       );
       return;
@@ -144,8 +147,8 @@
       window.location.href = PAYMENT_LINKS[items[0]];
     } else {
       openModal(
-        '<h3>Complete your purchase</h3>' +
-        '<p class="muted">Each program is a separate digital product. Click to pay for each:</p>' +
+        '<h3>Užbaikite pirkimą</h3>' +
+        '<p class="muted">Kiekviena programa yra atskiras skaitmeninis produktas. Spustelėkite, kad apmokėtumėte kiekvieną:</p>' +
         items.map(function (s) {
           return '<a class="btn btn-primary btn-block" style="margin-bottom:10px" target="_blank" rel="noopener" href="' +
             esc(PAYMENT_LINKS[s]) + '">' + esc(SKUS[s].title) + " — " + money(SKUS[s].price) + "</a>";
@@ -213,7 +216,7 @@
   //  INDEX PAGE
   // =====================================================
   function renderIndex() {
-    el("heroHeadline").textContent = biz.heroHeadline || "Clinician-designed rehab programs";
+    el("heroHeadline").textContent = biz.heroHeadline || "Klinikų sukurtos reabilitacijos programos";
     el("heroSub").textContent = biz.heroSub || "";
     if (biz.heroCta) el("heroCta").textContent = biz.heroCta;
     el("footerTagline").textContent = design.tagline || "";
@@ -231,13 +234,13 @@
       return '<a class="pcard reveal" href="program.html?slug=' + encodeURIComponent(c.slug) + '">' +
         '<div class="pcard-banner">' + bodyIcon(c.slug) + "</div>" +
         '<div class="pcard-body">' +
-          '<div class="pcard-tags"><span class="pill pill--primary">' + esc(sp.durationWeeks || "Short") + "</span>" +
-          '<span class="pill">' + esc(lp.durationWeeks || "Full") + "</span></div>" +
+          '<div class="pcard-tags"><span class="pill pill--primary">' + esc(sp.durationWeeks || "Trumpa") + "</span>" +
+          '<span class="pill">' + esc(lp.durationWeeks || "Pilna") + "</span></div>" +
           "<h3>" + esc(c.name) + "</h3>" +
           '<p class="desc">' + esc(overview) + (c.overview && c.overview.length > 130 ? "…" : "") + "</p>" +
-          '<div class="pcard-meta"><span>📋 2 versions</span><span>🏠 Home-friendly</span></div>' +
-          '<div class="pcard-foot"><span><span class="from">from </span><span class="price">' + money(P.shortUSD) + "</span></span>" +
-          '<span class="btn btn-outline" style="min-height:36px;padding:0 14px">View →</span></div>' +
+          '<div class="pcard-meta"><span>📋 2 versijos</span><span>🏠 Tinka namams</span></div>' +
+          '<div class="pcard-foot"><span><span class="from">nuo </span><span class="price">' + money(P.shortUSD) + "</span></span>" +
+          '<span class="btn btn-outline" style="min-height:36px;padding:0 14px">Žiūrėti →</span></div>' +
         "</div></a>";
     }).join("");
 
@@ -252,23 +255,23 @@
     el("pricingRationale").textContent = (P.rationale || "");
     var tiers = [
       {
-        name: "Relief & Reset", price: P.shortUSD, sub: "/program",
-        desc: "A focused 3–4 week plan to calm a recent flare-up and get moving again.",
-        feats: ["One short program of your choice", "Week-by-week plan (PDF)", "Clear cues + progressions", "Green/amber/red symptom guide", "Keep it forever"],
-        popular: false, cta: "Browse programs", href: "#programs"
+        name: "Palengvinimas ir atstatymas", price: P.shortUSD, sub: "/programa",
+        desc: "Tikslingas 3–4 savaičių planas neseniam paūmėjimui nuraminti ir judesiui sugrąžinti.",
+        feats: ["Viena trumpa pasirinkta programa", "Savaitės po savaitės planas (PDF)", "Aiškūs nurodymai + progresavimas", "Žalios/geltonos/raudonos simptomų gairės", "Lieka jums visam laikui"],
+        popular: false, cta: "Peržiūrėti programas", href: "#programs"
       },
       {
-        name: "Full Rehab & Resilience", price: P.longUSD, sub: "/program",
-        desc: "An 8–12 week program to rebuild strength and reduce the chance it returns.",
-        feats: ["One full rehab program of your choice", "Progressive phases to return-to-activity", "Printable progress tracker + self-tests", "Everything in Relief & Reset", "Free updates for life"],
-        popular: true, cta: "Browse programs", href: "#programs"
+        name: "Pilna reabilitacija ir atsparumas", price: P.longUSD, sub: "/programa",
+        desc: "8–12 savaičių programa jėgai atstatyti ir rizikai, kad tai pasikartos, sumažinti.",
+        feats: ["Viena pilna pasirinkta reabilitacijos programa", "Nuoseklios fazės iki grįžimo prie veiklos", "Spausdinamas pažangos sekiklis + savitestai", "Viskas, kas yra „Palengvinimo ir atstatymo“ plane", "Nemokami atnaujinimai visam laikui"],
+        popular: true, cta: "Peržiūrėti programas", href: "#programs"
       }
     ];
     if (P.bundleUSD) tiers.push({
-      name: "All-Access", price: P.bundleUSD, sub: "one-time",
-      desc: "Every short and full program, for the whole body. Best value for ongoing care.",
-      feats: ["Every program in the library", "Both short + full versions", "All future programs included", "Ideal for recurring or multiple issues"],
-      popular: false, cta: "Add bundle", href: "", sku: "all-access"
+      name: "Visa prieiga", price: P.bundleUSD, sub: "vienkartinis",
+      desc: "Visos trumpos ir pilnos programos visam kūnui. Geriausias pasirinkimas nuolatinei priežiūrai.",
+      feats: ["Visos bibliotekos programos", "Tiek trumpos, tiek pilnos versijos", "Įtrauktos visos būsimos programos", "Idealu pasikartojančioms ar kelioms problemoms"],
+      popular: false, cta: "Pridėti paketą", href: "", sku: "all-access"
     });
 
     el("tiers").innerHTML = tiers.map(function (t) {
@@ -276,13 +279,13 @@
         ? '<a class="btn btn-primary btn-block" href="#" data-add="' + esc(t.sku) + '">' + esc(t.cta) + "</a>"
         : '<a class="btn ' + (t.popular ? "btn-primary" : "btn-outline") + ' btn-block" href="' + esc(t.href) + '">' + esc(t.cta) + "</a>";
       return '<div class="tier ' + (t.popular ? "popular" : "") + ' reveal">' +
-        (t.popular ? '<span class="pill pill--accent pop-badge">Most popular</span>' : "") +
+        (t.popular ? '<span class="pill pill--accent pop-badge">Populiariausia</span>' : "") +
         "<h3>" + esc(t.name) + "</h3>" +
         '<div class="price">' + money(t.price) + " <small>" + esc(t.sub) + "</small></div>" +
         '<p class="tdesc">' + esc(t.desc) + "</p>" +
         "<ul>" + t.feats.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
         btn +
-        '<div class="guarantee">30-day money-back guarantee</div></div>';
+        '<div class="guarantee">30 dienų pinigų grąžinimo garantija</div></div>';
     }).join("");
 
     // testimonials
@@ -307,7 +310,7 @@
     var rl = el("refundLink");
     if (rl) rl.addEventListener("click", function (e) {
       e.preventDefault();
-      openModal("<h3>Refund policy</h3><p>" + esc(biz.refundPolicy || "") + "</p>");
+      openModal("<h3>Grąžinimo politika</h3><p>" + esc(biz.refundPolicy || "") + "</p>");
     });
 
     wireAccordions();
@@ -335,7 +338,7 @@
     var c = conditions.filter(function (x) { return x.slug === slug; })[0];
     var root = el("programRoot");
     if (!c) {
-      root.innerHTML = '<div class="container section"><h2>Program not found</h2><p><a href="index.html">← Back to all programs</a></p></div>';
+      root.innerHTML = '<div class="container section"><h2>Programa nerasta</h2><p><a href="index.html">← Grįžti į visas programas</a></p></div>';
       return;
     }
     document.title = c.name + " — Reformwell";
@@ -356,13 +359,13 @@
       if (p.timePerSession) meta.push("⏳ " + esc(p.timePerSession));
       var phases = p.phases.map(function (ph) {
         var exs = (ph.exercises || []).map(function (e) {
-          var dose = [e.sets ? e.sets + " sets" : "", e.reps ? e.reps : "", e.tempoOrHold ? "· " + e.tempoOrHold : ""].filter(Boolean).join(" × ").replace("× ·", "·");
-          return '<div class="ex">' + exImage(e.name) +
+          var dose = [e.sets ? e.sets + " serijos" : "", e.reps ? e.reps : "", e.tempoOrHold ? "· " + e.tempoOrHold : ""].filter(Boolean).join(" × ").replace("× ·", "·");
+          return '<div class="ex">' + exImage(e) +
             '<div class="ex-body"><div class="ex-head"><span class="ex-name">' + esc(e.name) + "</span>" +
             '<span class="ex-dose">' + esc(dose) + "</span></div>" +
-            '<div class="ex-row"><b>How:</b> ' + esc(e.cues) + "</div>" +
-            (e.progression ? '<div class="ex-row"><b>Progress:</b> ' + esc(e.progression) + "</div>" : "") +
-            (e.why ? '<div class="ex-row why"><b>Why:</b> ' + esc(e.why) + "</div>" : "") +
+            '<div class="ex-row"><b>Kaip:</b> ' + esc(e.cues) + "</div>" +
+            (e.progression ? '<div class="ex-row"><b>Pažanga:</b> ' + esc(e.progression) + "</div>" : "") +
+            (e.why ? '<div class="ex-row why"><b>Kodėl:</b> ' + esc(e.why) + "</div>" : "") +
             "</div></div>";
         }).join("");
         return '<div class="phase"><div class="phase-head"><h3>' + esc(ph.name) + "</h3>" +
@@ -370,7 +373,7 @@
           '<p class="focus">' + esc(ph.focus) + "</p>" + exs + "</div>";
       }).join("");
       var edu = (p.education && p.education.length)
-        ? '<div class="callout"><h4>Self-care tips</h4>' + list(p.education) + "</div>" : "";
+        ? '<div class="callout"><h4>Savipriežiūros patarimai</h4>' + list(p.education) + "</div>" : "";
       return '<div class="prog-pane" id="' + id + '">' +
         '<p class="muted">' + esc(p.goal || "") + "</p>" +
         '<div class="pcard-meta" style="margin:8px 0 20px">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
@@ -378,19 +381,19 @@
     }
 
     var seeDoc = (c.seeADoctorIf && c.seeADoctorIf.length)
-      ? '<div class="callout warn"><h4>⚠️ See a clinician first if…</h4>' + list(c.seeADoctorIf, "warn") + "</div>" : "";
+      ? '<div class="callout warn"><h4>⚠️ Pirmiausia kreipkitės į specialistą, jei…</h4>' + list(c.seeADoctorIf, "warn") + "</div>" : "";
     var safetyNote = saf.safetyNote
-      ? '<div class="callout warn"><h4>Safety note</h4><p>' + esc(saf.safetyNote) + "</p></div>" : "";
+      ? '<div class="callout warn"><h4>Saugumo pastaba</h4><p>' + esc(saf.safetyNote) + "</p></div>" : "";
 
     root.innerHTML =
       '<section class="detail-hero"><div class="container">' +
-        '<div class="breadcrumb"><a href="index.html">Home</a> / <a href="index.html#programs">Programs</a> / ' + esc(c.name) + "</div>" +
+        '<div class="breadcrumb"><a href="index.html">Pradžia</a> / <a href="index.html#programs">Programos</a> / ' + esc(c.name) + "</div>" +
         '<div class="detail-grid">' +
           "<div>" +
-            '<span class="eyebrow">Rehab program</span>' +
+            '<span class="eyebrow">Reabilitacijos programa</span>' +
             "<h1>" + esc(c.name) + "</h1>" +
             "<p style=\"font-size:1.08rem;color:var(--muted)\">" + esc(c.overview) + "</p>" +
-            (c.whoIsThisFor ? '<div class="callout"><h4>Who this is for</h4>' + list(c.whoIsThisFor) + "</div>" : "") +
+            (c.whoIsThisFor ? '<div class="callout"><h4>Kam tai skirta</h4>' + list(c.whoIsThisFor) + "</div>" : "") +
             seeDoc +
           "</div>" +
           buyBox(c, sp, lp) +
@@ -399,16 +402,16 @@
 
       '<section class="section"><div class="container">' +
         '<div class="tabs" id="progTabs">' +
-          '<button class="tab active" data-pane="paneShort">' + esc(sp.name || "Relief & Reset") + " · " + money(P.shortUSD) + "</button>" +
-          '<button class="tab" data-pane="paneLong">' + esc(lp.name || "Full Rehab") + " · " + money(P.longUSD) + "</button>" +
+          '<button class="tab active" data-pane="paneShort">' + esc(sp.name || "Palengvinimas ir atstatymas") + " · " + money(P.shortUSD) + "</button>" +
+          '<button class="tab" data-pane="paneLong">' + esc(lp.name || "Pilna reabilitacija") + " · " + money(P.longUSD) + "</button>" +
         "</div>" +
         '<div id="paneShort">' + programHTML(sp, "sp") + "</div>" +
         '<div id="paneLong" hidden>' + programHTML(lp, "lp") + "</div>" +
 
         safetyNote +
-        (c.expectedOutcomes ? '<div class="callout"><h4>What to expect</h4>' + list(c.expectedOutcomes) + "</div>" : "") +
+        (c.expectedOutcomes ? '<div class="callout"><h4>Ko tikėtis</h4>' + list(c.expectedOutcomes) + "</div>" : "") +
 
-        (c.faqs && c.faqs.length ? '<h2 style="margin-top:48px">Questions about this program</h2><div class="accordion">' + c.faqs.map(faqItem).join("") + "</div>" : "") +
+        (c.faqs && c.faqs.length ? '<h2 style="margin-top:48px">Klausimai apie šią programą</h2><div class="accordion">' + c.faqs.map(faqItem).join("") + "</div>" : "") +
       "</div></section>";
 
     // tabs
@@ -426,15 +429,15 @@
 
   function buyBox(c, sp, lp) {
     return '<div class="buy-box">' +
-      "<h3 style=\"margin-bottom:14px\">Get this program</h3>" +
+      "<h3 style=\"margin-bottom:14px\">Įsigykite šią programą</h3>" +
       '<div class="buy-option sel" data-sku="' + esc(shortSku(c.slug)) + '">' +
-        '<div class="bo-top"><span class="bo-name">' + esc(sp.name || "Relief & Reset") + '</span><span class="bo-price">' + money(P.shortUSD) + "</span></div>" +
-        '<div class="bo-meta">' + esc(sp.durationWeeks || "3–4 weeks") + " · calm a flare-up</div></div>" +
+        '<div class="bo-top"><span class="bo-name">' + esc(sp.name || "Palengvinimas ir atstatymas") + '</span><span class="bo-price">' + money(P.shortUSD) + "</span></div>" +
+        '<div class="bo-meta">' + esc(sp.durationWeeks || "3–4 savaitės") + " · nuraminti paūmėjimą</div></div>" +
       '<div class="buy-option" data-sku="' + esc(longSku(c.slug)) + '">' +
-        '<div class="bo-top"><span class="bo-name">' + esc(lp.name || "Full Rehab & Resilience") + '</span><span class="bo-price">' + money(P.longUSD) + "</span></div>" +
-        '<div class="bo-meta">' + esc(lp.durationWeeks || "8–12 weeks") + " · full rebuild</div></div>" +
-      '<button class="btn btn-primary btn-block" id="addSelected" style="margin-top:8px">Add to cart</button>' +
-      '<div class="guarantee" style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:10px">30-day money-back guarantee · instant download</div>' +
+        '<div class="bo-top"><span class="bo-name">' + esc(lp.name || "Pilna reabilitacija ir atsparumas") + '</span><span class="bo-price">' + money(P.longUSD) + "</span></div>" +
+        '<div class="bo-meta">' + esc(lp.durationWeeks || "8–12 savaičių") + " · visiškas atstatymas</div></div>" +
+      '<button class="btn btn-primary btn-block" id="addSelected" style="margin-top:8px">Į krepšelį</button>' +
+      '<div class="guarantee" style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:10px">30 dienų pinigų grąžinimo garantija · atsisiuntimas iškart</div>' +
       "</div>";
   }
 

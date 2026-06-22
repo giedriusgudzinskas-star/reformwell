@@ -9,6 +9,12 @@ downloads/
 # in assets/exercises/. Keep these locally as masters; no need to deploy them.
 _originals-png/
 
+# English-source backup of the (now Lithuanian) content — kept locally, not deployed
+data-en.js
+
+# translation working files
+_i18n/
+
 # --- local / scratch ---
 Thumbs.db
 .DS_Store
