@@ -221,9 +221,10 @@
     if (biz.heroCta) el("heroCta").textContent = biz.heroCta;
     el("footerTagline").textContent = design.tagline || "";
 
-    // value props
-    el("valueProps").innerHTML = (biz.valueProps || []).map(function (v) {
-      return '<div class="feature reveal"><div class="ficon">' + esc(v.icon || "✓") + "</div>" +
+    // value props (icons defined here so they always render, regardless of data encoding)
+    var vpIcons = ["🩺", "🏠", "💶", "🛡️", "📈", "⏱️"];
+    el("valueProps").innerHTML = (biz.valueProps || []).map(function (v, i) {
+      return '<div class="feature reveal"><div class="ficon">' + (vpIcons[i] || "✓") + "</div>" +
         "<h3>" + esc(v.title) + "</h3><p>" + esc(v.body) + "</p></div>";
     }).join("");
 
