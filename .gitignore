@@ -24,6 +24,8 @@ comfyui/_all-poses.txt
 comfyui/_genlog_arrows.txt
 comfyui/_genresults_cast.json
 comfyui/_genlog_cast.txt
+comfyui/_pdfcheck/
+_render.py
 
 # --- local / scratch ---
 Thumbs.db
