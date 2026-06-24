@@ -25,7 +25,13 @@ comfyui/_genlog_arrows.txt
 comfyui/_genresults_cast.json
 comfyui/_genlog_cast.txt
 comfyui/_pdfcheck/
+comfyui/_regen/
+comfyui/_qc-results.json
+comfyui/_qc-round1.json
+comfyui/_genlog_regen.txt
+comfyui/_mismatch_montage.png
 _render.py
+comfyui/_montage.py
 
 # --- local / scratch ---
 Thumbs.db

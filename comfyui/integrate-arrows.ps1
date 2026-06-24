@@ -2,11 +2,11 @@
 # assets/exercises, backing up the originals first. Run AFTER generation finishes.
 #
 #   & '.\integrate-arrows.ps1'
-param([int]$Quality = 80)
+param([int]$Quality = 80, [string]$Source = "_staging")
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Drawing
 $root = $PSScriptRoot
-$stage = Join-Path $root "_staging"
+$stage = Join-Path $root $Source
 $assets = Join-Path $root "..\assets\exercises"
 $backup = Join-Path $root "_backup-pre-arrows"
 if(-not (Test-Path $backup)){ New-Item -ItemType Directory -Force -Path $backup | Out-Null }
