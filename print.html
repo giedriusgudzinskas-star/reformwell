@@ -49,9 +49,10 @@
     .phase-h h3{ font-size:14px; }
     .phase-h .wk{ font-size:10px; color:var(--primary-dark); background:var(--tint); padding:2px 8px; border-radius:999px; font-weight:600; }
     .phase .focus{ color:var(--muted); font-size:11px; margin-bottom:9px; }
-    .ex{ border-top:1px solid var(--border); padding:8px 0; page-break-inside:avoid; display:flex; gap:11px; align-items:flex-start; }
+    .ex{ border-top:1px solid var(--border); padding:12px 0; page-break-inside:avoid; display:flex; gap:15px; align-items:flex-start; }
     .ex:first-of-type{ border-top:0; }
-    .ex-thumb{ flex:0 0 78px; width:78px; height:78px; border-radius:8px; object-fit:cover; background:var(--tint); }
+    .ex-thumb{ flex:0 0 132px; width:132px; height:132px; border-radius:10px; overflow:hidden; background:var(--tint); border:1px solid var(--border); }
+    .ex-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .ex-body{ flex:1; min-width:0; }
     .ex-h{ display:flex; justify-content:space-between; gap:10px; }
     .ex-name{ font-family:'Sora'; font-weight:600; font-size:12px; }
@@ -80,7 +81,7 @@
       // Image filename from exercise name — keep identical to assets/exercises/ slugs.
       function exSlug(name){ return String(name==null?"":name).toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
       // Thumbnail; if the picture isn't generated yet it hides itself and the text reflows full width.
-      function thumb(e){ var slug=(e&&e.img)?e.img:exSlug(e&&e.name?e.name:e); return '<img class="ex-thumb" src="assets/exercises/'+esc(slug)+'.jpg" onerror="this.style.display=\'none\'">'; }
+      function thumb(e){ var slug=(e&&e.img)?e.img:exSlug(e&&e.name?e.name:e); return '<div class="ex-thumb"><img src="assets/exercises/'+esc(slug)+'.jpg" onerror="this.style.display=\'none\'"></div>'; }
       var D=window.SITE_DATA||{}, slug=qp("slug"), kind=qp("kind")||"short";
       var conds=D.conditions||[], biz=D.business||{}, safety=D.safety||{};
       var c=conds.filter(function(x){return x.slug===slug;})[0];

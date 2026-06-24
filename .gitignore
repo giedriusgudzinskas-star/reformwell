@@ -15,6 +15,16 @@ data-en.js
 # translation working files
 _i18n/
 
+# --- image-regen working files (large PNGs / backups, kept locally only) ---
+comfyui/_staging/
+comfyui/_examples/
+comfyui/_backup-pre-arrows/
+comfyui/_qc/
+comfyui/_all-poses.txt
+comfyui/_genlog_arrows.txt
+comfyui/_genresults_cast.json
+comfyui/_genlog_cast.txt
+
 # --- local / scratch ---
 Thumbs.db
 .DS_Store
