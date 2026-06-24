@@ -178,10 +178,11 @@ img { max-width: 100%; display: block; }
 .hero-trust .stars { color: var(--accent); letter-spacing: 2px; }
 .hero-media { position: relative; }
 .hero-card-img {
-  background: linear-gradient(135deg, #0E7C86, #0A5B63); border-radius: var(--radius-lg);
-  aspect-ratio: 4/5; display: grid; place-items: center; color: rgba(255,255,255,0.9); box-shadow: var(--shadow-lg);
+  background: var(--primary-tint); border-radius: var(--radius-lg);
+  aspect-ratio: 3/4; box-shadow: var(--shadow-lg);
   position: relative; overflow: hidden;
 }
+.hero-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .hero-card-img .body-icon { font-size: 120px; opacity: 0.92; }
 .float-card {
   position: absolute; bottom: 24px; left: -24px; border-radius: var(--radius);
@@ -194,8 +195,9 @@ img { max-width: 100%; display: block; }
 .float-card .fc-title { font-family: var(--font-head); font-weight: 600; font-size: 14px; margin-top: 10px; }
 
 @media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
-  .hero-media { order: -1; max-width: 360px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; padding: 40px 0; }
+  /* Text first on mobile: headline + CTA above the fold, image follows. */
+  .hero-media { max-width: 340px; margin: 0 auto; }
   .float-card { left: auto; right: 12px; }
 }
 
