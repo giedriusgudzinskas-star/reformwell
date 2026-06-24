@@ -335,6 +335,13 @@ img { max-width: 100%; display: block; }
 /* placeholder glyph shown until the ComfyUI image exists (or if it fails to load) */
 .ex-media.is-empty::after { content: "🏋"; position: absolute; inset: 0;
   display: grid; place-items: center; font-size: 2rem; opacity: .3; }
+/* Lock gate — shown after free preview exercises */
+.lock-gate { text-align: center; padding: 32px 24px; margin-top: 8px;
+  border: 2px dashed var(--border); border-radius: 16px;
+  background: linear-gradient(to bottom, transparent, var(--surface)); }
+.lock-icon { font-size: 2rem; margin-bottom: 10px; }
+.lock-msg { color: var(--muted); margin-bottom: 20px; font-size: 1rem; line-height: 1.5; }
+.lock-msg strong { color: var(--text); }
 @media (max-width: 560px) {
   .ex { gap: 14px; }
   .ex-media { flex-basis: 88px; width: 88px; height: 88px; }

@@ -372,27 +372,48 @@
       if (p.durationWeeks) meta.push("⏱ " + esc(p.durationWeeks));
       if (p.sessionsPerWeek) meta.push("📅 " + esc(p.sessionsPerWeek));
       if (p.timePerSession) meta.push("⏳ " + esc(p.timePerSession));
-      var phases = p.phases.map(function (ph) {
-        var exs = (ph.exercises || []).map(function (e) {
-          var dose = [e.sets ? e.sets + " serijos" : "", e.reps ? e.reps : "", e.tempoOrHold ? "· " + e.tempoOrHold : ""].filter(Boolean).join(" × ").replace("× ·", "·");
-          return '<div class="ex">' + exImage(e) +
-            '<div class="ex-body"><div class="ex-head"><span class="ex-name">' + esc(e.name) + "</span>" +
-            '<span class="ex-dose">' + esc(dose) + "</span></div>" +
-            '<div class="ex-row"><b>Kaip:</b> ' + esc(e.cues) + "</div>" +
-            (e.progression ? '<div class="ex-row"><b>Pažanga:</b> ' + esc(e.progression) + "</div>" : "") +
-            (e.why ? '<div class="ex-row why"><b>Kodėl:</b> ' + esc(e.why) + "</div>" : "") +
-            "</div></div>";
-        }).join("");
-        return '<div class="phase"><div class="phase-head"><h3>' + esc(ph.name) + "</h3>" +
-          (ph.weeks ? '<span class="pill pill--primary">' + esc(ph.weeks) + "</span>" : "") + "</div>" +
-          '<p class="focus">' + esc(ph.focus) + "</p>" + exs + "</div>";
-      }).join("");
+
+      var PREVIEW = 2;
+      var totalEx = p.phases.reduce(function (t, ph) { return t + (ph.exercises || []).length; }, 0);
+      var lockedEx = Math.max(0, totalEx - PREVIEW);
+      var lockedPhases = Math.max(0, p.phases.length - 1);
+
+      function renderEx(e) {
+        var dose = [e.sets ? e.sets + " serijos" : "", e.reps ? e.reps : "", e.tempoOrHold ? "· " + e.tempoOrHold : ""].filter(Boolean).join(" × ").replace("× ·", "·");
+        return '<div class="ex">' + exImage(e) +
+          '<div class="ex-body"><div class="ex-head"><span class="ex-name">' + esc(e.name) + "</span>" +
+          '<span class="ex-dose">' + esc(dose) + "</span></div>" +
+          '<div class="ex-row"><b>Kaip:</b> ' + esc(e.cues) + "</div>" +
+          (e.progression ? '<div class="ex-row"><b>Pažanga:</b> ' + esc(e.progression) + "</div>" : "") +
+          (e.why ? '<div class="ex-row why"><b>Kodėl:</b> ' + esc(e.why) + "</div>" : "") +
+          "</div></div>";
+      }
+
+      var firstPhase = p.phases[0];
+      var previewExs = (firstPhase.exercises || []).slice(0, PREVIEW).map(renderEx).join("");
+
+      var fazLabel = lockedPhases === 1 ? "fazės" : "fazių";
+      var lockMsg = "Dar <strong>" + lockedEx + " pratimų</strong>" +
+        (lockedPhases > 0 ? " ir <strong>" + lockedPhases + " " + fazLabel + "</strong>" : "") +
+        " — tik PDF versijoje.";
+      var lockGate = '<div class="lock-gate">' +
+        '<div class="lock-icon">🔒</div>' +
+        '<p class="lock-msg">' + lockMsg + "</p>" +
+        '<a class="btn btn-primary" href="#buy" onclick="var b=document.querySelector(\'.buy-box\');if(b){b.scrollIntoView({behavior:\'smooth\'});}return false;">Gauti pilną programą</a>' +
+        "</div>";
+
+      var phasesHTML = '<div class="phase">' +
+        '<div class="phase-head"><h3>' + esc(firstPhase.name) + "</h3>" +
+        (firstPhase.weeks ? '<span class="pill pill--primary">' + esc(firstPhase.weeks) + "</span>" : "") + "</div>" +
+        '<p class="focus">' + esc(firstPhase.focus) + "</p>" +
+        previewExs + lockGate + "</div>";
+
       var edu = (p.education && p.education.length)
         ? '<div class="callout"><h4>Savipriežiūros patarimai</h4>' + list(p.education) + "</div>" : "";
       return '<div class="prog-pane" id="' + id + '">' +
         '<p class="muted">' + esc(p.goal || "") + "</p>" +
         '<div class="pcard-meta" style="margin:8px 0 20px">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>" +
-        phases + edu + "</div>";
+        phasesHTML + edu + "</div>";
     }
 
     var seeDoc = (c.seeADoctorIf && c.seeADoctorIf.length)
@@ -443,7 +464,7 @@
   }
 
   function buyBox(c, sp, lp) {
-    return '<div class="buy-box">' +
+    return '<div class="buy-box" id="buy">' +
       "<h3 style=\"margin-bottom:14px\">Įsigykite šią programą</h3>" +
       '<div class="buy-option sel" data-sku="' + esc(shortSku(c.slug)) + '">' +
         '<div class="bo-top"><span class="bo-name">' + esc(sp.name || "Palengvinimas ir atstatymas") + '</span><span class="bo-price">' + money(P.shortUSD) + "</span></div>" +
