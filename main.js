@@ -305,9 +305,10 @@
 
     // testimonials
     el("testimonials").innerHTML = (biz.testimonialsPlaceholder || []).map(function (q) {
+      var initials = esc(q.name || "?").split(" ").map(function(w){return w[0];}).join("").slice(0,2);
       return '<div class="quote reveal"><div class="stars">★★★★★</div>' +
         "<blockquote>" + esc(q.quote) + "</blockquote>" +
-        '<div class="who"><b>' + esc(q.name) + "</b>" + esc(q.detail || "") + "</div></div>";
+        '<div class="who"><div class="who-avatar">' + initials + '</div><div><b>' + esc(q.name) + "</b>" + esc(q.detail || "") + "</div></div></div>";
     }).join("");
 
     // about
