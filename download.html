@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atsisiuntimas — Reformwell</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .dl-wrap { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; }
+    .dl-badge { display: inline-flex; align-items: center; gap: 8px; background: #e8f8f0; color: #1a7a4a; border-radius: 999px; padding: 6px 16px; font-size: 0.85rem; font-weight: 600; margin-bottom: 28px; }
+    .dl-badge svg { width: 16px; height: 16px; }
+    .dl-title { font-family: var(--font-head); font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.2; }
+    .dl-subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 36px; line-height: 1.6; }
+    .dl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 16px; }
+    .dl-card-name { font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 20px; }
+    .dl-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--primary); color: #fff; border: none; border-radius: 999px; padding: 16px 24px; font-size: 1rem; font-weight: 600; font-family: var(--font-head); text-decoration: none; cursor: pointer; box-shadow: 0 4px 24px rgba(14,124,134,0.30); transition: transform .18s ease, box-shadow .18s ease; }
+    .dl-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(14,124,134,0.40); }
+    .dl-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .dl-note { font-size: 0.82rem; color: var(--muted); text-align: center; margin-top: 12px; }
+    .dl-group-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .dl-bundle-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+    .dl-bundle-item:last-child { border-bottom: none; }
+    .dl-bundle-name { font-size: 0.93rem; color: var(--text); flex: 1; line-height: 1.4; }
+    .dl-bundle-type { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .dl-bundle-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-tint); color: var(--primary-dark); border-radius: 999px; padding: 8px 16px; font-size: 0.83rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background .15s; flex-shrink: 0; }
+    .dl-bundle-btn:hover { background: rgba(14,124,134,0.15); }
+    .dl-support { background: var(--bg); border-radius: 14px; padding: 20px; margin-top: 28px; text-align: center; font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .dl-support a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
+    .dl-error { text-align: center; padding: 60px 20px; }
+    .dl-error .err-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .dl-error h2 { font-family: var(--font-head); margin-bottom: 12px; }
+    .dl-error p { color: var(--muted); line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <header class="nav" id="nav" style="position:static">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="mark">↻</span> Reformwell</a>
+      <div class="nav-actions"><a href="index.html" class="btn btn-outline">← Pradžia</a></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="dl-wrap" id="dl-content">
+      <div style="text-align:center;padding:60px 0;color:var(--muted)">Kraunama…</div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 Reformwell. Nepakeičia tiesioginės gydytojo priežiūros.</span>
+        <span><a href="terms.html">Sąlygos</a> · <a href="privacy.html">Privatumas</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    /* ---------------------------------------------------------------
+       GOOGLE DRIVE NUORODOS
+       Kaip užpildyti:
+         1. Įkelk PDF į Google Drive
+         2. Dešinys pelės mygtukas → "Bendrinti" → "Visi su nuoroda"
+         3. Nukopijuok ID iš URL:
+            https://drive.google.com/file/d/ >>> FILE_ID <<< /view
+         4. Įklijuok ID vietoje DRIVE_ID_...
+    --------------------------------------------------------------- */
+    var DRIVE = {
+      "low-back-pain__short":      "DRIVE_ID_low-back-pain-short",
+      "low-back-pain__long":       "DRIVE_ID_low-back-pain-long",
+      "neck-pain__short":          "DRIVE_ID_neck-pain-short",
+      "neck-pain__long":           "DRIVE_ID_neck-pain-long",
+      "shoulder__short":           "DRIVE_ID_shoulder-short",
+      "shoulder__long":            "DRIVE_ID_shoulder-long",
+      "knee-pain__short":          "DRIVE_ID_knee-pain-short",
+      "knee-pain__long":           "DRIVE_ID_knee-pain-long",
+      "plantar-fasciitis__short":  "DRIVE_ID_plantar-fasciitis-short",
+      "plantar-fasciitis__long":   "DRIVE_ID_plantar-fasciitis-long",
+      "tennis-elbow__short":       "DRIVE_ID_tennis-elbow-short",
+      "tennis-elbow__long":        "DRIVE_ID_tennis-elbow-long",
+      "hip-glute__short":          "DRIVE_ID_hip-glute-short",
+      "hip-glute__long":           "DRIVE_ID_hip-glute-long",
+      "ankle-sprain__short":       "DRIVE_ID_ankle-sprain-short",
+      "ankle-sprain__long":        "DRIVE_ID_ankle-sprain-long"
+    };
+
+    var PRODUCTS = {
+      "low-back-pain__short":     { name: "Juosmens skausmas", type: "Palengvinimo ir atstatymo planas" },
+      "low-back-pain__long":      { name: "Juosmens skausmas", type: "Reabilitacijos ir atsparumo programa" },
+      "neck-pain__short":         { name: "Kaklo ir nugaros skausmas", type: "Palengvinimo ir atstatymo planas" },
+      "neck-pain__long":          { name: "Kaklo ir nugaros skausmas", type: "Reabilitacijos ir atsparumo programa" },
+      "shoulder__short":          { name: "Peties skausmas", type: "Palengvinimo ir atstatymo planas" },
+      "shoulder__long":           { name: "Peties skausmas", type: "Reabilitacijos ir atsparumo programa" },
+      "knee-pain__short":         { name: "Kelio skausmas", type: "Palengvinimo ir atstatymo planas" },
+      "knee-pain__long":          { name: "Kelio skausmas", type: "Reabilitacijos ir atsparumo programa" },
+      "plantar-fasciitis__short": { name: "Plantarinis fascitas", type: "Palengvinimo ir atstatymo planas" },
+      "plantar-fasciitis__long":  { name: "Plantarinis fascitas", type: "Reabilitacijos ir atsparumo programa" },
+      "tennis-elbow__short":      { name: "Teniso alkūnė", type: "Palengvinimo ir atstatymo planas" },
+      "tennis-elbow__long":       { name: "Teniso alkūnė", type: "Reabilitacijos ir atsparumo programa" },
+      "hip-glute__short":         { name: "Klubo ir sėdmenų skausmas", type: "Palengvinimo ir atstatymo planas" },
+      "hip-glute__long":          { name: "Klubo ir sėdmenų skausmas", type: "Reabilitacijos ir atsparumo programa" },
+      "ankle-sprain__short":      { name: "Čiurnos patempimas", type: "Palengvinimo ir atstatymo planas" },
+      "ankle-sprain__long":       { name: "Čiurnos patempimas", type: "Reabilitacijos ir atsparumo programa" }
+    };
+
+    var BUNDLE_ORDER = [
+      "low-back-pain", "neck-pain", "shoulder", "knee-pain",
+      "plantar-fasciitis", "tennis-elbow", "hip-glute", "ankle-sprain"
+    ];
+
+    function driveUrl(id) {
+      return "https://drive.google.com/uc?export=download&id=" + id;
+    }
+
+    function dlIcon() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    }
+
+    function checkIcon() {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    }
+
+    function supportBlock() {
+      return '<div class="dl-support">Klausimai? Rašykite: <a href="mailto:info@reformwell.lt">info@reformwell.lt</a><br>Atsakome per 1 darbo dieną. 30 dienų pinigų grąžinimo garantija.</div>';
+    }
+
+    var sku = new URLSearchParams(location.search).get("sku") || "";
+    var wrap = document.getElementById("dl-content");
+
+    if (sku === "all-access") {
+      var bundleItems = BUNDLE_ORDER.map(function (slug) {
+        var short = slug + "__short";
+        var long = slug + "__long";
+        var ps = PRODUCTS[short];
+        var pl = PRODUCTS[long];
+        return '<div class="dl-group-label">' + (ps ? ps.name : slug) + '</div>' +
+          '<div class="dl-bundle-item">' +
+          '<div><div class="dl-bundle-name">' + (ps ? ps.type : "Trumpas") + '</div></div>' +
+          '<a class="dl-bundle-btn" href="' + driveUrl(DRIVE[short]) + '" download>' + dlIcon() + ' Atsisiųsti</a>' +
+          '</div>' +
+          '<div class="dl-bundle-item">' +
+          '<div><div class="dl-bundle-name">' + (pl ? pl.type : "Pilnas") + '</div></div>' +
+          '<a class="dl-bundle-btn" href="' + driveUrl(DRIVE[long]) + '" download>' + dlIcon() + ' Atsisiųsti</a>' +
+          '</div>';
+      }).join("");
+
+      wrap.innerHTML =
+        '<div class="dl-badge">' + checkIcon() + ' Pirkimas patvirtintas</div>' +
+        '<div class="dl-title">Visa Reformwell biblioteka</div>' +
+        '<div class="dl-subtitle">Visi 16 programų PDF\'ai žemiau. Nuorodos jūsų visam laikui — galite atsisiųsti bet kada.</div>' +
+        '<div class="dl-card">' + bundleItems + '</div>' +
+        supportBlock();
+
+    } else if (PRODUCTS[sku]) {
+      var p = PRODUCTS[sku];
+      var id = DRIVE[sku];
+      wrap.innerHTML =
+        '<div class="dl-badge">' + checkIcon() + ' Pirkimas patvirtintas</div>' +
+        '<div class="dl-title">Ačiū! Programa paruošta.</div>' +
+        '<div class="dl-subtitle">Sėkmingai įsigijote <strong>' + p.name + ' — ' + p.type + '</strong>. Atsisiųskite PDF\'ą žemiau.</div>' +
+        '<div class="dl-card">' +
+        '<div class="dl-card-name">' + p.name + '<br><span style="font-weight:400;color:var(--muted);font-size:0.92rem">' + p.type + '</span></div>' +
+        '<a class="dl-btn" href="' + driveUrl(id) + '" download>' + dlIcon() + ' Atsisiųsti PDF</a>' +
+        '<p class="dl-note">PDF failas · atsidaro telefone, planšetėje ir kompiuteryje · jūsų visam laikui</p>' +
+        '</div>' +
+        supportBlock();
+
+    } else {
+      wrap.innerHTML =
+        '<div class="dl-error">' +
+        '<div class="err-icon">🔍</div>' +
+        '<h2>Programa nerasta</h2>' +
+        '<p>Nepavyko nustatyti jūsų įsigytos programos.<br>Parašykite mums ir išsiųsime failą ranka:</p>' +
+        '<p style="margin-top:20px"><a href="mailto:info@reformwell.lt" class="btn btn-primary">Susisiekti</a></p>' +
+        '</div>';
+    }
+  })();
+  </script>
+</body>
+</html>
