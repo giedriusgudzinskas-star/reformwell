@@ -32,7 +32,8 @@
     .dl-support { background: var(--bg); border-radius: 14px; padding: 20px; margin-top: 28px; text-align: center; font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
     .dl-support a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
     .dl-error { text-align: center; padding: 60px 20px; }
-    .dl-error .err-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .dl-error .err-icon { color: var(--muted); margin-bottom: 16px; line-height: 0; }
+    .dl-error .err-icon svg { width: 40px; height: 40px; }
     .dl-error h2 { font-family: var(--font-head); margin-bottom: 12px; }
     .dl-error p { color: var(--muted); line-height: 1.6; }
   </style>
@@ -40,8 +41,8 @@
 <body>
   <header class="nav" id="nav" style="position:static">
     <div class="container nav-inner">
-      <a class="brand" href="index.html"><span class="mark">↻</span> Reformwell</a>
-      <div class="nav-actions"><a href="index.html" class="btn btn-outline">← Pradžia</a></div>
+      <a class="brand" href="index.html">Reformwell</a>
+      <div class="nav-actions"><a href="index.html" class="btn btn-outline">Grįžti į pradžią</a></div>
     </div>
   </header>
 
@@ -174,7 +175,7 @@
     } else {
       wrap.innerHTML =
         '<div class="dl-error">' +
-        '<div class="err-icon">🔍</div>' +
+        '<div class="err-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>' +
         '<h2>Programa nerasta</h2>' +
         '<p>Nepavyko nustatyti jūsų įsigytos programos.<br>Parašykite mums ir išsiųsime failą ranka:</p>' +
         '<p style="margin-top:20px"><a href="mailto:info@reformwell.lt" class="btn btn-primary">Susisiekti</a></p>' +

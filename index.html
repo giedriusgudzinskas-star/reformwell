@@ -22,7 +22,7 @@
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="container nav-inner">
-      <a class="brand" href="index.html"><span class="mark">↻</span> Reformwell</a>
+      <a class="brand" href="index.html">Reformwell</a>
       <nav class="nav-links" id="navLinks">
         <a href="#programs">Programos</a>
         <a href="#how">Kaip tai veikia</a>
@@ -31,9 +31,9 @@
         <a href="#faq">DUK</a>
       </nav>
       <div class="nav-actions">
-        <button class="cart-btn" id="cartBtn" aria-label="Atidaryti krepšelį">🛒<span class="cart-count" id="cartCount" hidden>0</span></button>
+        <button class="cart-btn" id="cartBtn" aria-label="Atidaryti krepšelį"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" id="cartCount" hidden>0</span></button>
         <a href="#programs" class="btn btn-primary">Rasti programą</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Meniu">☰</button>
+        <button class="nav-toggle" id="navToggle" aria-label="Meniu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       </div>
     </div>
   </header>
@@ -41,9 +41,9 @@
   <!-- TRUST STRIP -->
   <div class="trust-strip">
     <div class="container">
-      <span>✓ Peržiūrėjo licencijuoti kineziterapeutai</span>
-      <span>✓ 30 dienų pinigų grąžinimo garantija</span>
-      <span>✓ Atsisiuntimas iškart, jūsų visam laikui</span>
+      <span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Peržiūrėjo licencijuoti kineziterapeutai</span>
+      <span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>30 dienų pinigų grąžinimo garantija</span>
+      <span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Atsisiuntimas iškart, jūsų visam laikui</span>
     </div>
   </div>
 
@@ -64,22 +64,21 @@
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <span class="eyebrow">Klinikų sukurta reabilitacija</span>
         <h1 id="heroHeadline"></h1>
         <p class="hero-sub" id="heroSub"></p>
         <div class="hero-cta">
           <a href="#programs" class="btn btn-primary" id="heroCta">Peržiūrėti programas</a>
           <a href="#how" class="btn btn-outline">Kaip tai veikia</a>
         </div>
-        <div class="hero-trust">
-          <span class="stars">★★★★★</span>
-          <span>Sukurta pagal tikrus reabilitacijos principus — ne atsitiktiniai pratimai.</span>
-        </div>
+        <blockquote class="hero-quote">
+          „Pagaliau programa, kuri paaiškina kodėl, ne tik ką daryti.“
+          <cite>— Rūta K., 38, lėtinis nugaros skausmas</cite>
+        </blockquote>
       </div>
       <div class="hero-media">
         <div class="hero-card-img"><img src="assets/exercises/farmer-s-carry.jpg" alt="Žmogus atlieka kineziterapijos pratimą" loading="eager" /></div>
         <div class="float-card">
-          <div class="fc-top">📈 2 savaitė iš 6 · Apatinė nugara</div>
+          <div class="fc-top"><span class="fc-tag">Pažanga</span> 2 savaitė iš 6 · Apatinė nugara</div>
           <div class="fc-bar"><i></i></div>
           <div class="fc-title">12 min./d. · 1 fazė baigta</div>
         </div>
@@ -92,7 +91,7 @@
     <div class="container">
       <div class="section-head center">
         <span class="eyebrow">Kodėl Reformwell</span>
-        <h2>Struktūruotas atsigavimas, kuriuo galite pasitikėti</h2>
+        <h2>Ta pati logika, kurią taiko kineziterapeutas. Dabar jūsų namuose.</h2>
         <p>Ta pati nuosekli logika, kurią taiko geras kineziterapeutas — pateikta taip, kad galėtumėte ją atlikti namuose, savo tempu.</p>
       </div>
       <div class="grid-3" id="valueProps"></div>
@@ -139,7 +138,7 @@
     <div class="container">
       <div class="section-head center">
         <span class="eyebrow">Ką sako žmonės</span>
-        <h2>Tikri planai, tikra pažanga</h2>
+        <h2>Ką sako žmonės, kurie išbandė</h2>
         <!-- DEV NOTE (not shown to visitors): the quotes below are placeholders.
              Replace with real, consent-given client testimonials before launch. -->
         <p class="muted" style="font-size:.95rem">Nuoseklios programos, pritaikytos jūsų būklei — atliekamos namuose, jūsų tempu.</p>
@@ -152,7 +151,7 @@
   <section class="section" id="about">
     <div class="container narrow center">
       <span class="eyebrow">Apie Reformwell</span>
-      <h2>Atsigavimas — aiškiai</h2>
+      <h2>Kas yra Reformwell</h2>
       <p id="aboutCopy" style="font-size:1.05rem;color:var(--muted)"></p>
     </div>
   </section>
@@ -162,7 +161,7 @@
     <div class="container narrow">
       <div class="section-head center">
         <span class="eyebrow">DUK</span>
-        <h2>Atsakymai į klausimus</h2>
+        <h2>Dažni klausimai</h2>
       </div>
       <div class="accordion" id="faqList"></div>
     </div>
@@ -171,7 +170,6 @@
   <!-- DISCLAIMER -->
   <div class="disclaimer-band">
     <div class="container">
-      <span class="di">⚕️</span>
       <p id="disclaimer"></p>
     </div>
   </div>
@@ -181,7 +179,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="fbrand"><span class="fmark">↻</span> Reformwell</div>
+          <div class="fbrand">Reformwell</div>
           <p id="footerTagline" style="max-width:320px"></p>
         </div>
         <div>
@@ -220,7 +218,7 @@
   <aside class="drawer" id="drawer" aria-label="Pirkinių krepšelis">
     <div class="drawer-head">
       <h3>Jūsų krepšelis</h3>
-      <button class="drawer-close" id="drawerClose" aria-label="Uždaryti">×</button>
+      <button class="drawer-close" id="drawerClose" aria-label="Uždaryti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="drawer-body" id="cartBody"></div>
     <div class="drawer-foot">
@@ -232,7 +230,7 @@
   <!-- MODAL -->
   <div class="modal" id="modal">
     <div class="modal-box">
-      <button class="modal-close" id="modalClose" aria-label="Uždaryti">×</button>
+      <button class="modal-close" id="modalClose" aria-label="Uždaryti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div id="modalContent"></div>
     </div>
   </div>

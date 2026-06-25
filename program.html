@@ -20,7 +20,7 @@
 <body>
   <header class="nav" id="nav">
     <div class="container nav-inner">
-      <a class="brand" href="index.html"><span class="mark">↻</span> Reformwell</a>
+      <a class="brand" href="index.html">Reformwell</a>
       <nav class="nav-links" id="navLinks">
         <a href="index.html#programs">Programos</a>
         <a href="index.html#how">Kaip tai veikia</a>
@@ -29,9 +29,9 @@
         <a href="index.html#faq">DUK</a>
       </nav>
       <div class="nav-actions">
-        <button class="cart-btn" id="cartBtn" aria-label="Atidaryti krepšelį">🛒<span class="cart-count" id="cartCount" hidden>0</span></button>
-        <a href="index.html#programs" class="btn btn-primary">Visos programos</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Meniu">☰</button>
+        <button class="cart-btn" id="cartBtn" aria-label="Atidaryti krepšelį"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count" id="cartCount" hidden>0</span></button>
+        <a href="index.html#programs" class="btn btn-primary">Peržiūrėti programas</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Meniu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       </div>
     </div>
   </header>
@@ -40,7 +40,6 @@
 
   <div class="disclaimer-band">
     <div class="container">
-      <span class="di">⚕️</span>
       <p id="disclaimer"></p>
     </div>
   </div>
@@ -49,7 +48,7 @@
     <div class="container">
       <div class="footer-bottom" style="border:none;margin:0;padding:0">
         <span>© <span id="year">2026</span> Reformwell. Nepakeičia tiesioginės gydytojo priežiūros.</span>
-        <span style="color:rgba(255,255,255,0.78)"><a href="terms.html" style="color:inherit">Sąlygos</a> · <a href="privacy.html" style="color:inherit">Privatumas</a> · <a href="index.html" style="color:inherit">← Visos programos</a></span>
+        <span style="color:rgba(255,255,255,0.78)"><a href="terms.html" style="color:inherit">Sąlygos</a> · <a href="privacy.html" style="color:inherit">Privatumas</a> · <a href="index.html" style="color:inherit">Visos programos</a></span>
       </div>
     </div>
   </footer>
@@ -59,7 +58,7 @@
   <aside class="drawer" id="drawer" aria-label="Pirkinių krepšelis">
     <div class="drawer-head">
       <h3>Jūsų krepšelis</h3>
-      <button class="drawer-close" id="drawerClose" aria-label="Uždaryti">×</button>
+      <button class="drawer-close" id="drawerClose" aria-label="Uždaryti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="drawer-body" id="cartBody"></div>
     <div class="drawer-foot">
@@ -70,7 +69,7 @@
 
   <div class="modal" id="modal">
     <div class="modal-box">
-      <button class="modal-close" id="modalClose" aria-label="Uždaryti">×</button>
+      <button class="modal-close" id="modalClose" aria-label="Uždaryti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div id="modalContent"></div>
     </div>
   </div>

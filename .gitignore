@@ -49,3 +49,6 @@ comfyui/_diff.py
 comfyui/_m2.py
 comfyui/_regen2/
 comfyui/_regen2_montage.png
+
+_*.py
+_lt-review.txt

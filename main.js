@@ -230,15 +230,22 @@
   //  INDEX PAGE
   // =====================================================
   function renderIndex() {
-    el("heroHeadline").textContent = biz.heroHeadline || "Klinikų sukurtos reabilitacijos programos";
+    el("heroHeadline").textContent = biz.heroHeadline || "Reabilitacija be laukimo eilių.";
     el("heroSub").textContent = biz.heroSub || "";
     if (biz.heroCta) el("heroCta").textContent = biz.heroCta;
     el("footerTagline").textContent = design.tagline || "";
 
     // value props (icons defined here so they always render, regardless of data encoding)
-    var vpIcons = ["🩺", "🏠", "💶", "🛡️", "📈", "⏱️"];
+    var vpIcons = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>'
+    ];
     el("valueProps").innerHTML = (biz.valueProps || []).map(function (v, i) {
-      return '<div class="feature reveal"><div class="ficon">' + (vpIcons[i] || "✓") + "</div>" +
+      return '<div class="feature reveal"><div class="ficon">' + (vpIcons[i] || "") + "</div>" +
         "<h3>" + esc(v.title) + "</h3><p>" + esc(v.body) + "</p></div>";
     }).join("");
 
@@ -253,9 +260,9 @@
           '<span class="pill">' + esc(lp.durationWeeks || "Pilna") + "</span></div>" +
           "<h3>" + esc(c.name) + "</h3>" +
           '<p class="desc">' + esc(overview) + (c.overview && c.overview.length > 130 ? "…" : "") + "</p>" +
-          '<div class="pcard-meta"><span>📋 2 versijos</span><span>🏠 Tinka namams</span></div>' +
+          '<div class="pcard-meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>2 versijos</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Tinka namams</span></div>' +
           '<div class="pcard-foot"><span><span class="from">nuo </span><span class="price">' + money(P.shortUSD) + "</span></span>" +
-          '<span class="btn btn-outline" style="min-height:36px;padding:0 14px">Žiūrėti →</span></div>' +
+          '<span class="btn btn-outline" style="min-height:36px;padding:0 14px">Peržiūrėti</span></div>' +
         "</div></a>";
     }).join("");
 
@@ -304,11 +311,13 @@
     }).join("");
 
     // testimonials
+    // NOTE: testimonialsPlaceholder are illustrative examples — replace with real,
+    // consent-given client reviews before relying on them publicly.
     el("testimonials").innerHTML = (biz.testimonialsPlaceholder || []).map(function (q) {
-      var initials = esc(q.name || "?").split(" ").map(function(w){return w[0];}).join("").slice(0,2);
-      return '<div class="quote reveal"><div class="stars">★★★★★</div>' +
-        "<blockquote>" + esc(q.quote) + "</blockquote>" +
-        '<div class="who"><div class="who-avatar">' + initials + '</div><div><b>' + esc(q.name) + "</b>" + esc(q.detail || "") + "</div></div></div>";
+      var cite = [esc(q.name || ""), q.age ? esc(String(q.age)) : "", esc(q.condition || "")].filter(Boolean).join(", ");
+      return '<blockquote class="quote reveal">' +
+        '<p class="quote-text">' + esc(q.quote) + "</p>" +
+        '<cite class="quote-cite">— ' + cite + "</cite></blockquote>";
     }).join("");
 
     // about
@@ -334,16 +343,12 @@
 
   function faqItem(f) {
     return '<div class="acc-item"><button class="acc-q">' + esc(f.q) +
-      '<span class="chev">▾</span></button><div class="acc-a"><p>' + esc(f.a) + "</p></div></div>";
+      '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></button><div class="acc-a"><p>' + esc(f.a) + "</p></div></div>";
   }
 
   function bodyIcon(slug) {
-    var m = {
-      "low-back-pain": "🔻", "neck-pain": "🦒", "shoulder": "💪",
-      "knee-pain": "🦵", "plantar-fasciitis": "🦶", "tennis-elbow": "🎾",
-      "hip-glute": "🍑", "ankle-sprain": "🦴"
-    };
-    return m[slug] || "🩹";
+    // Clean uniform line mark for program banners (no emoji); the condition name sits below it.
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>';
   }
 
   // =====================================================
@@ -354,7 +359,7 @@
     var c = conditions.filter(function (x) { return x.slug === slug; })[0];
     var root = el("programRoot");
     if (!c) {
-      root.innerHTML = '<div class="container section"><h2>Programa nerasta</h2><p><a href="index.html">← Grįžti į visas programas</a></p></div>';
+      root.innerHTML = '<div class="container section"><h2>Programa nerasta</h2><p><a href="index.html">Grįžti į visas programas</a></p></div>';
       return;
     }
     document.title = c.name + " — Reformwell";
@@ -370,9 +375,9 @@
     function programHTML(p, id) {
       if (!p || !p.phases) return "";
       var meta = [];
-      if (p.durationWeeks) meta.push("⏱ " + esc(p.durationWeeks));
-      if (p.sessionsPerWeek) meta.push("📅 " + esc(p.sessionsPerWeek));
-      if (p.timePerSession) meta.push("⏳ " + esc(p.timePerSession));
+      if (p.durationWeeks) meta.push('<svg class="meta-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>' + esc(p.durationWeeks));
+      if (p.sessionsPerWeek) meta.push('<svg class="meta-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + esc(p.sessionsPerWeek));
+      if (p.timePerSession) meta.push('<svg class="meta-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>' + esc(p.timePerSession));
 
       var PREVIEW = 2;
       var totalEx = p.phases.reduce(function (t, ph) { return t + (ph.exercises || []).length; }, 0);
@@ -398,7 +403,7 @@
         (lockedPhases > 0 ? " ir <strong>" + lockedPhases + " " + fazLabel + "</strong>" : "") +
         " — tik PDF versijoje.";
       var lockGate = '<div class="lock-gate">' +
-        '<div class="lock-icon">🔒</div>' +
+        '<div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
         '<p class="lock-msg">' + lockMsg + "</p>" +
         '<a class="btn btn-primary" href="#buy" onclick="var b=document.querySelector(\'.buy-box\');if(b){b.scrollIntoView({behavior:\'smooth\'});}return false;">Gauti pilną programą</a>' +
         "</div>";
@@ -418,7 +423,7 @@
     }
 
     var seeDoc = (c.seeADoctorIf && c.seeADoctorIf.length)
-      ? '<div class="callout warn"><h4>⚠️ Pirmiausia kreipkitės į specialistą, jei…</h4>' + list(c.seeADoctorIf, "warn") + "</div>" : "";
+      ? '<div class="callout warn"><h4>Pirmiausia kreipkitės į specialistą, jei…</h4>' + list(c.seeADoctorIf, "warn") + "</div>" : "";
     var safetyNote = saf.safetyNote
       ? '<div class="callout warn"><h4>Saugumo pastaba</h4><p>' + esc(saf.safetyNote) + "</p></div>" : "";
 
