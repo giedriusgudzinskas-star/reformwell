@@ -38,3 +38,14 @@ Thumbs.db
 .DS_Store
 desktop.ini
 *.log
+
+comfyui/_lt-fixes.json
+comfyui/_lt-fixes-diff.txt
+comfyui/_lt-review.txt
+comfyui/_lt-strings.json
+_dump.py
+_verify.py
+comfyui/_diff.py
+comfyui/_m2.py
+comfyui/_regen2/
+comfyui/_regen2_montage.png
