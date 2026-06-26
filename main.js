@@ -307,7 +307,7 @@
         '<p class="tdesc">' + esc(t.desc) + "</p>" +
         "<ul>" + t.feats.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
         btn +
-        '<div class="guarantee">30 dienų pinigų grąžinimo garantija</div></div>';
+        '<div class="guarantee">14 dienų pinigų grąžinimo garantija</div></div>';
     }).join("");
 
     // testimonials
@@ -479,7 +479,7 @@
         '<div class="bo-top"><span class="bo-name">' + esc(lp.name || "Pilna reabilitacija ir atsparumas") + '</span><span class="bo-price">' + money(P.longUSD) + "</span></div>" +
         '<div class="bo-meta">' + esc(lp.durationWeeks || "8–12 savaičių") + " · visiškas atstatymas</div></div>" +
       '<button class="btn btn-primary btn-block" id="addSelected" style="margin-top:8px">Į krepšelį</button>' +
-      '<div class="guarantee" style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:10px">30 dienų pinigų grąžinimo garantija · atsisiuntimas iškart</div>' +
+      '<div class="guarantee" style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:10px">14 dienų pinigų grąžinimo garantija · atsisiuntimas iškart</div>' +
       "</div>";
   }
 

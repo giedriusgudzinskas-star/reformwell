@@ -142,10 +142,12 @@ img { max-width: 100%; display: block; }
   }
 }
 
-/* Trust strip */
-.trust-strip { background: var(--primary-dark); color: rgba(255,255,255,0.92); font-size: 13.5px; }
-.trust-strip .container { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: center; padding-top: 10px; padding-bottom: 10px; }
-.trust-strip span { display: inline-flex; align-items: center; gap: 7px; }
+/* Thin accent bar under the nav (same teal as the old trust strip) */
+.accent-bar { height: 6px; background: var(--primary-dark); }
+
+/* Trust row — relocated to the pricing section (point of decision) */
+.trust-row { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: center; margin-top: 40px; font-size: 13.5px; color: var(--muted); }
+.trust-row span { display: inline-flex; align-items: center; gap: 7px; }
 
 /* Stats bar */
 .stats-bar { background: var(--surface); border-bottom: 1px solid var(--border); }
@@ -389,7 +391,7 @@ img { max-width: 100%; display: block; }
 .cart-btn { display: grid; place-items: center; }
 .cart-btn svg { width: 20px; height: 20px; }
 .nav-toggle svg { width: 26px; height: 26px; display: block; }
-.trust-strip span svg.ic-check { width: 14px; height: 14px; flex-shrink: 0; }
+.trust-row span svg.ic-check { width: 14px; height: 14px; flex-shrink: 0; color: var(--success); }
 .drawer-close svg, .modal-close svg { width: 22px; height: 22px; display: block; }
 .acc-q .chev svg { width: 18px; height: 18px; display: block; }
 .meta-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 5px; }
