@@ -310,15 +310,8 @@
         '<div class="guarantee">14 dienų pinigų grąžinimo garantija</div></div>';
     }).join("");
 
-    // testimonials
-    // NOTE: testimonialsPlaceholder are illustrative examples — replace with real,
-    // consent-given client reviews before relying on them publicly.
-    el("testimonials").innerHTML = (biz.testimonialsPlaceholder || []).map(function (q) {
-      var cite = [esc(q.name || ""), q.age ? esc(String(q.age)) : "", esc(q.condition || "")].filter(Boolean).join(", ");
-      return '<blockquote class="quote reveal">' +
-        '<p class="quote-text">' + esc(q.quote) + "</p>" +
-        '<cite class="quote-cite">— ' + cite + "</cite></blockquote>";
-    }).join("");
+    // testimonials section removed — no real reviews yet.
+    // Planned post-launch: per-program review/comment feature (founder decision 2026-06-29).
 
     // about
     el("aboutCopy").textContent = biz.aboutCopy || "";
