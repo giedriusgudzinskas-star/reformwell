@@ -340,8 +340,19 @@
   }
 
   function bodyIcon(slug) {
-    // Clean uniform line mark for program banners (no emoji); the condition name sits below it.
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>';
+    // Distinct schematic anatomical line icon per condition (no emoji), consistent stroke style.
+    var P = {
+      "low-back-pain":     '<path d="M12 3v18"/><path d="M8.5 5.5h7"/><path d="M8.5 9h7"/><path d="M8.5 12.5h7"/><path d="M8.5 16h7"/>',
+      "neck-pain":         '<circle cx="12" cy="6" r="3"/><path d="M12 9v4"/><path d="M6.5 20c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5"/>',
+      "shoulder":          '<circle cx="8" cy="8" r="3"/><path d="M8 11c-2.5 0-4 2-4 4.5V20"/><path d="M10.5 9.5c2 1 3.5 2.8 4.5 5l1.5 4"/>',
+      "knee-pain":         '<path d="M9 3v7"/><path d="M9 10c0 3-1.5 5-3 11"/><path d="M9 10c1.5 2 4 3 8 3"/><circle cx="9" cy="10" r="1.8"/>',
+      "plantar-fasciitis": '<path d="M7.5 4c2.3 0 3.3 1.8 3.3 4.2 0 1.5.6 2.4 2 3l2.8 1.2c1.3.6 1.9 1.6 1.9 3v1c0 1.1-.9 2-2 2H8c-2.2 0-4-1.8-4-4V8c0-2.2 1.3-4 3.5-4Z"/>',
+      "tennis-elbow":      '<path d="M6 3v7"/><path d="M6 10l9 4"/><path d="M15 14l3 6"/><circle cx="6" cy="10" r="1.8"/>',
+      "hip-glute":         '<path d="M5 6c0 7 3 11 7 11s7-4 7-11"/><path d="M5 6h14"/><path d="M9.5 6v3.5"/><path d="M14.5 6v3.5"/>',
+      "ankle-sprain":      '<path d="M11 3v9"/><circle cx="11" cy="12" r="1.8"/><path d="M11 12c0 2.5 1.5 4 4 4h4"/><path d="M9.3 13.2C8 14 7 15.3 7 17v3"/>'
+    };
+    var inner = P[slug] || '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
   }
 
   // =====================================================

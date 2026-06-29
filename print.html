@@ -15,7 +15,7 @@
     @page{ size:A4; margin:16mm 15mm 20mm; }
     html,body{ margin:0; padding:0; }
     body{
-      font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:11.5px; line-height:1.55;
+      font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:12px; line-height:1.55;
       -webkit-print-color-adjust:exact; print-color-adjust:exact;
     }
     h1,h2,h3,h4{ font-family:'Sora',sans-serif; margin:0; line-height:1.2; }
@@ -56,10 +56,34 @@
     .ex-body{ flex:1; min-width:0; }
     .ex-name{ font-family:'Sora'; font-weight:600; font-size:12.5px; line-height:1.3; margin-bottom:4px; }
     .ex-dose{ font-size:10.5px; color:var(--primary-dark); font-weight:600; line-height:1.45; margin-bottom:10px; }
-    .ex p{ margin:7px 0 0; font-size:11px; line-height:1.6; }
+    .ex p{ margin:7px 0 0; font-size:11.5px; line-height:1.6; }
     .ex p:first-of-type{ margin-top:0; }
     .ex .why{ color:var(--muted); }
     .lbl{ font-weight:700; color:var(--text); margin-right:4px; }
+
+    /* Onboarding / how-to */
+    .howto{ background:var(--tint); border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin:0 0 16px; }
+    .howto h4{ font-size:12.5px; margin:0 0 6px; color:var(--primary-dark); }
+    .howto ol{ margin:0; padding-left:18px; } .howto li{ margin:3px 0; font-size:11.5px; }
+    /* Contraindications */
+    .box.stop{ background:#FDECEC; border-left:3px solid #C0392B; }
+    .box.stop h4{ color:#922B21; }
+    /* Warm-up / cool-down */
+    .warm{ background:#EAF6F1; border-left:3px solid #2E7D5B; border-radius:10px; padding:12px 15px; margin:0 0 12px; }
+    .warm h4{ font-size:12px; margin:0 0 4px; color:#1f6b4d; }
+    .warm p{ margin:0; font-size:11.5px; }
+    /* Exercise: brace, numbered steps, safety gate */
+    .ex .brace{ font-size:11.5px; margin:6px 0 0; }
+    .ex .brace .lbl{ color:var(--primary-dark); }
+    .ex ol.steps{ margin:3px 0 0; padding-left:20px; }
+    .ex ol.steps li{ font-size:11.5px; line-height:1.55; margin:2px 0; }
+    .gate{ background:#FFF8EC; border:1px solid #E8A33D; border-radius:8px; padding:7px 10px; margin:8px 0 0; font-size:10.5px; color:#7a5a14; }
+    .gate b{ color:#8a5a12; }
+    /* Schedule */
+    table.sched{ width:100%; border-collapse:collapse; margin:8px 0; font-size:10.5px; }
+    table.sched th, table.sched td{ border:1px solid var(--border); padding:6px 8px; text-align:left; vertical-align:top; }
+    table.sched th{ background:var(--tint); font-family:'Sora'; font-weight:600; }
+    .starthere{ display:inline-block; background:var(--primary); color:#fff; font-family:'Sora'; font-weight:700; font-size:11px; padding:4px 12px; border-radius:999px; margin:0 0 8px; }
 
     /* tracker */
     table.track{ width:100%; border-collapse:collapse; margin-top:6px; font-size:10.5px; }
@@ -97,26 +121,58 @@
       if(p.sessionsPerWeek) meta.push("<span><b>Dažnis:</b> "+esc(p.sessionsPerWeek)+"</span>");
       if(p.timePerSession) meta.push("<span><b>Vienam užsiėmimui:</b> "+esc(p.timePerSession)+"</span>");
 
+      // Detect loaded / resistance exercises (need safety gate + brace cue).
+      function isLoaded(e){ var t=((e.name||"")+" "+(e.cues||"")+" "+(e.progression||"")).toLowerCase();
+        return /svori|hantel|svarst|svarmen|guma|juost|stangin|kuprin|pasiprie|šuol|pliometr|\bhop\b|bound|skip|pakyl|laiptel|step-?up|spaudim|pritūp|išpuol|blauzdos kėlim|nešim/.test(t); }
+      // Split a cue paragraph into numbered steps (on sentence boundary + capital).
+      function steps(txt){ txt=String(txt||"").trim(); if(!txt) return "";
+        var parts=txt.split(/\.\s+(?=[A-ZĄČĘĖĮŠŲŪŽ„])/);
+        if(parts.length<2) return '<p><span class="lbl">Kaip:</span> '+esc(txt)+'</p>';
+        return '<p style="margin:0 0 2px"><span class="lbl">Kaip:</span></p><ol class="steps">'+
+          parts.map(function(s){ s=s.trim(); if(s&&!/[.!?]$/.test(s)) s+="."; return '<li>'+esc(s)+'</li>'; }).join("")+'</ol>'; }
+      function renderEx(e){
+        var dose=[e.sets?e.sets+" serijos":"", e.reps?"× "+e.reps:"", e.tempoOrHold?"· "+e.tempoOrHold:""].filter(Boolean).join(" ");
+        var loaded=isLoaded(e);
+        var rest=e.sets?(loaded?"Poilsis: 60–90 s tarp serijų":"Poilsis: pagal poreikį"):"";
+        var doseFull=[dose,rest].filter(Boolean).join("  ·  ");
+        return '<div class="ex">'+thumb(e)+'<div class="ex-body">'+
+          '<div class="ex-name">'+esc(e.name)+'</div>'+
+          (doseFull?'<div class="ex-dose">'+esc(doseFull)+'</div>':'')+
+          (loaded?'<div class="gate"><b>SUSTOKITE</b>, jei jaučiate aštrų skausmą, sąnario „užsikirtimą“ ar tirpimą — tai nėra normalus raumenų nuovargis. Pailsėkite ir pasitarkite su kineziterapeutu.</div>':'')+
+          (loaded?'<p class="brace"><span class="lbl">Įtvirtinimas:</span> prieš judesį įtvirtinkite liemenį (tarsi ruoštumėtės lengvam smūgiui į pilvą) ir kvėpuokite tolygiai, nesulaikydami kvėpavimo.</p>':'')+
+          steps(e.cues)+
+          (e.progression?'<p><span class="lbl">Pažanga:</span> '+esc(e.progression)+'</p>':'')+
+          (e.why?'<p class="why"><span class="lbl">Kodėl:</span> '+esc(e.why)+'</p>':'')+
+          '</div></div>';
+      }
+
       var phases=(p.phases||[]).map(function(ph){
-        var exs=(ph.exercises||[]).map(function(e){
-          var dose=[e.sets?e.sets+" serijos":"", e.reps?"× "+e.reps:"", e.tempoOrHold?"· "+e.tempoOrHold:""].filter(Boolean).join(" ");
-          return '<div class="ex">'+thumb(e)+'<div class="ex-body">'+
-            '<div class="ex-name">'+esc(e.name)+'</div>'+
-            (dose?'<div class="ex-dose">'+esc(dose)+'</div>':'')+
-            '<p><span class="lbl">Kaip:</span> '+esc(e.cues)+'</p>'+
-            (e.progression?'<p><span class="lbl">Pažanga:</span> '+esc(e.progression)+'</p>':'')+
-            (e.why?'<p class="why"><span class="lbl">Kodėl:</span> '+esc(e.why)+'</p>':'')+
-            '</div></div>';
-        }).join("");
+        var exs=(ph.exercises||[]).map(renderEx).join("");
         return '<div class="phase"><div class="phase-h"><h3>'+esc(ph.name)+'</h3>'+(ph.weeks?'<span class="wk">'+esc(ph.weeks)+'</span>':'')+'</div>'+
           '<div class="focus">'+esc(ph.focus)+'</div>'+exs+'</div>';
       }).join("");
 
-      // simple 6-week tracker
+      // Warm-up / cool-down (condition-aware via this program's phase-1 mobility)
+      var p1=(p.phases&&p.phases[0]&&p.phases[0].exercises)||[];
+      var p1names=p1.slice(0,4).map(function(e){return e.name;}).join(", ");
+      var warmup='<div class="warm"><h4>Apšilimas (5 min) — prieš kiekvieną treniruotę</h4><p>2–3 min lengvo judėjimo (žygiuokite vietoje arba lengvai pasivaikščiokite), tada lėtai ir neskausmingai atlikite šios programos švelnius 1 etapo judrumo pratimus'+(p1names?' ('+esc(p1names)+')':'')+'. Tikslas — sušildyti sąnarius ir raumenis, o ne pavargti.</p></div>';
+      var cooldown='<div class="warm"><h4>Atvėsimas (5 min) — po kiekvienos treniruotės</h4><p>3–4 lengvi tempimai (laikykite 20–30 s be skausmo, netampykite jėga) ir 1–2 min lėto diafragminio kvėpavimo, kad raumenys atsipalaiduotų, o nervų sistema nurimtų.</p></div>';
+
+      // How-to / onboarding (#012)
+      var howtoItems=['Perskaitykite skiltis „Apie šią būklę“, „Kam skirta“ ir „Pirmiausia kreipkitės į specialistą“.','Įsitikinkite, kad jums netinka nė viena kontraindikacija (žr. žemiau).','Pasiruoškite reikalingą inventorių (pvz. pasipriešinimo gumą ar hantelius, kai nurodyta).','<b>1 diena:</b> atlikite Apšilimą, tada 1 etapo pratimus nurodytomis serijomis ir pakartojimais; laikykitės tvarkaraščio.','Skausmo taisyklė: nemalonūs pojūčiai iki 3–4/10, greitai praeinantys — priimtina; aštrus, stiprėjantis ar naujas skausmas — sustokite.'];
+      var howto='<div class="howto"><h4>Prieš pradedant — kaip naudotis šia programa</h4><ol>'+howtoItems.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ol></div>';
+
+      // Contraindications (#010)
+      var contraItems=['neseniai operuotasi (pooperacinis laikotarpis);','yra ūmi (šviežia) trauma arba stiprus uždegimas;','įtariamas ar diagnozuotas lūžis;','nėštumas;','sunki, nauja ar nekontroliuojama sveikatos būklė.'];
+      var contra='<div class="box stop"><h4>Nenaudokite šios programos be specialisto leidimo, jei…</h4><ul class="clean">'+contraItems.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul><p style="margin:6px 0 0;font-size:11.5px">Tokiais atvejais pirmiausia pasitarkite su gydytoju ar kineziterapeutu.</p></div>';
+
+      // Schedule page (#011) + tick tracker
+      var schedRows=(p.phases||[]).map(function(ph){ var nm=esc(ph.name).replace(/^\s*\d+\s*(etapas|fazė)\s*[:\-–]?\s*/i,''); return '<tr><td>'+(ph.weeks?esc(ph.weeks):'—')+'</td><td>'+nm+'</td></tr>'; }).join("");
+      var sched='<span class="starthere">PRADĖKITE ČIA → 1 diena = 1 etapas</span>'+
+        '<table class="sched"><tr><th>Savaitės</th><th>Etapas (ką darote)</th></tr>'+schedRows+'</table>'+
+        '<p style="font-size:11.5px">Dažnis: '+esc(p.sessionsPerWeek||"—")+'. Vienos treniruotės trukmė: '+esc(p.timePerSession||"—")+'. Palikite bent vieną poilsio dieną per savaitę (poilsio dieną tinka lengvas pasivaikščiojimas). Žymėkite atliktas dienas lentelėje žemiau.</p>';
       var rows="";
-      for(var w=1; w<=6; w++){
-        rows+='<tr><td class="day">'+w+' savaitė</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
-      }
+      for(var w=1; w<=6; w++){ rows+='<tr><td class="day">'+w+' savaitė</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'; }
       var tracker='<table class="track"><tr><th style="text-align:left">Savaitė</th><th>Pr</th><th>An</th><th>Tr</th><th>Kt</th><th>Pn</th><th>Št</th><th>Sk</th></tr>'+rows+'</table>';
 
       root.innerHTML=
@@ -128,21 +184,22 @@
           '<div class="meta">'+meta.join("")+'</div>'+
         '</div>'+
 
+        howto+
         (p.goal?'<div class="section"><div class="box"><b>Tikslas:</b> '+esc(p.goal)+'</div></div>':'')+
-
         '<div class="section"><h2 class="eyebrow">Apie šią būklę</h2><p>'+esc(c.overview)+'</p></div>'+
-
         (c.whoIsThisFor?'<div class="section"><h2 class="eyebrow">Kam skirta ši programa</h2>'+list(c.whoIsThisFor)+'</div>':'')+
-
+        contra+
         (c.seeADoctorIf?'<div class="box warn"><h4>Pirmiausia kreipkitės į specialistą, jei…</h4>'+list(c.seeADoctorIf)+'</div>':'')+
         (saf.safetyNote?'<div class="box warn"><h4>Saugumo pastaba</h4><p>'+esc(saf.safetyNote)+'</p></div>':'')+
 
-        '<div class="section pagebreak"><h2 class="eyebrow">Jūsų programa</h2>'+phases+'</div>'+
+        '<div class="section pagebreak"><h2 class="eyebrow">Tvarkaraštis</h2>'+sched+'</div>'+
+
+        '<div class="section"><h2 class="eyebrow">Jūsų programa</h2>'+warmup+phases+cooldown+'</div>'+
 
         ((p.education&&p.education.length)?'<div class="section"><h2 class="eyebrow">Savipriežiūros patarimai</h2>'+list(p.education)+'</div>':'')+
         (c.expectedOutcomes?'<div class="section"><h2 class="eyebrow">Ko tikėtis</h2>'+list(c.expectedOutcomes)+'</div>':'')+
 
-        '<div class="section"><h2 class="eyebrow">Pažangos sekiklis</h2><p style="color:var(--muted)">Pažymėkite kiekvieną dieną, kai atliekate užsiėmimą.</p>'+tracker+'</div>'+
+        '<div class="section"><h2 class="eyebrow">Pažangos žymėjimas</h2><p style="color:var(--muted)">Pažymėkite kiekvieną dieną, kai atliekate užsiėmimą.</p>'+tracker+'</div>'+
 
         '<div class="disclaimer">'+esc(safety.globalDisclaimer||biz.medicalDisclaimer||"")+'</div>';
 
